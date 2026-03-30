@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ocb2016 | bio</title>
+    <meta name="description" content="ocb2016 — developer, 3D artist & creator. Portfolio & projects.">
+    <meta name="theme-color" content="#0a0a0c">
+    <meta property="og:title" content="ocb2016 | bio">
+    <meta property="og:description" content="developer / 3d artist / creator — portfolio & projects">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://ocb2016.me/img/pfp.jpg">
+    <meta property="og:url" content="https://ocb2016.me/">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" type="image/svg+xml" href="logo_site.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ========== PRELOADER ========== -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <span class="preloader-logo">ocb2016</span>
+        </div>
+        <div class="preloader-bar">
+            <div class="preloader-bar-fill"></div>
+        </div>
+    </div>
+
+    <canvas id="particles"></canvas>
+
+    <audio id="ambient" loop preload="auto">
+        <source src="audio/ambient.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="copy-toast" id="copyToast">[ username copied to clipboard ]</div>
+
+    <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">
+        <svg class="sound-icon sound-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+        <svg class="sound-icon sound-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+    </button>
+
+    <button class="moon-btn" id="moonBtn" aria-label="Flip!">
+        <img src="icons/moon.svg" alt="Moon">
+    </button>
+
+    <div class="flip-wrapper" id="flipWrapper">
+        <div class="container">
+            <header class="hero">
+                <div class="hero-glow"></div>
+
+                <div class="discord-card physics-element" id="discordCard">
+                    <img class="dc-badge" src="icons/discord.svg" alt="">
+                    <div class="dc-left">
+                        <div class="dc-avatar-wrap">
+                            <img src="img/pfp.jpg" alt="avatar" class="dc-avatar">
+                            <span class="dc-status-dot" id="dcStatusDot"></span>
+                        </div>
+                    </div>
+                    <div class="dc-info">
+                        <span class="dc-username">ocb2016</span>
+                        <span class="dc-status-text" id="dcStatusText" style="display:none">Offline</span>
+                        <div class="dc-activity" id="dcActivity">
+                            <img class="dc-activity-img" id="dcActivityImg" style="display:none">
+                            <div class="dc-activity-text">
+                                <span class="dc-activity-label" id="dcActivityLabel">Playing</span>
+                                <span class="dc-activity-name" id="dcActivityName"></span>
+                                <span class="dc-activity-details" id="dcActivityDetails"></span>
+                                <span class="dc-activity-state" id="dcActivityState"></span>
+                            </div>
+                        </div>
+                        <span class="dc-lanyard-hint" id="dcHint"></span>
+                    </div>
+                </div>
+
+                <h1 class="title physics-element">ocb2016</h1>
+                <p class="tagline physics-element">developer <span class="separator">/</span> 3d artist <span class="separator">/</span> creator</p>
+
+                <div class="socials physics-element">
+                    <a href="https://t.me/ocb2016" target="_blank" class="social-btn" aria-label="Telegram" data-tooltip="Telegram">
+                        <img src="icons/telegram.svg" alt="Telegram">
+                    </a>
+                    <button class="social-btn" id="discordCopyBtn" aria-label="Discord" data-tooltip="Discord">
+                        <img src="icons/discord.svg" alt="Discord">
+                    </button>
+                    <a href="https://steamcommunity.com/id/ocb2016/" target="_blank" class="social-btn" aria-label="Steam" data-tooltip="Steam">
+                        <img src="icons/steam.svg" alt="Steam">
+                    </a>
+                    <a href="https://soundcloud.com/ocb2016" target="_blank" class="social-btn" aria-label="SoundCloud" data-tooltip="SoundCloud">
+                        <img src="icons/soundcloud.svg" alt="SoundCloud">
+                    </a>
+                </div>
+            </header>
+
+            <section class="skills-section">
+                <h2 class="section-title physics-element">
+                    <span class="title-decoration">&lt;</span>
+                    Skills
+                    <span class="title-decoration">/&gt;</span>
+                </h2>
+
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3 class="category-title physics-element"><span class="category-icon">~</span> Programming</h3>
+                        <div class="skill-cards">
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/python.svg" class="skill-svg" alt="Python"></div><span class="skill-name">Python</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/java.svg" class="skill-svg" alt="Java"></div><span class="skill-name">Java</span><div class="skill-bar"><div class="skill-fill" data-level="75"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/c%23.svg" class="skill-svg" alt="C#"></div><span class="skill-name">C#</span><div class="skill-bar"><div class="skill-fill" data-level="80"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/c%2B%2B.svg" class="skill-svg" alt="C++"></div><span class="skill-name">C++</span><div class="skill-bar"><div class="skill-fill" data-level="25"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/php.svg" class="skill-svg" alt="PHP"></div><span class="skill-name">PHP</span><div class="skill-bar"><div class="skill-fill" data-level="30"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/sql.svg" class="skill-svg" alt="SQL"></div><span class="skill-name">SQL</span><div class="skill-bar"><div class="skill-fill" data-level="50"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/typescript.svg" class="skill-svg" alt="TypeScript"></div><span class="skill-name">TypeScript</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/rust.svg" class="skill-svg" alt="Rust"></div><span class="skill-name">Rust</span><div class="skill-bar"><div class="skill-fill" data-level="5"></div></div></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title physics-element"><span class="category-icon">></span> Game Engines</h3>
+                        <div class="skill-cards">
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/unity.svg" class="skill-svg" alt="Unity"></div><span class="skill-name">Unity</span><div class="skill-bar"><div class="skill-fill" data-level="90"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/ue.svg" class="skill-svg" alt="UE5"></div><span class="skill-name">Unreal Engine 5</span><div class="skill-bar"><div class="skill-fill" data-level="20"></div></div></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title physics-element"><span class="category-icon">#</span> 3D Art</h3>
+                        <div class="skill-cards">
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/blender.svg" class="skill-svg" alt="Blender"></div><span class="skill-name">Blender</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/zbrush.svg" class="skill-svg" alt="zBrush"></div><span class="skill-name">zBrush</span><div class="skill-bar"><div class="skill-fill" data-level="70"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/substancepainter.svg" class="skill-svg" alt="Substance Painter"></div><span class="skill-name">Substance Painter</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title physics-element"><span class="category-icon">%</span> Video Editing</h3>
+                        <div class="skill-cards">
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/pr.svg" class="skill-svg" alt="Premiere Pro"></div><span class="skill-name">Premiere Pro</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/davinci.svg" class="skill-svg" alt="DaVinci Resolve"></div><span class="skill-name">DaVinci Resolve</span><div class="skill-bar"><div class="skill-fill" data-level="75"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/ae.svg" class="skill-svg" alt="After Effects"></div><span class="skill-name">After Effects</span><div class="skill-bar"><div class="skill-fill" data-level="30"></div></div></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title physics-element"><span class="category-icon">@</span> DevOps & Tools</h3>
+                        <div class="skill-cards">
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/docker.svg" class="skill-svg" alt="Docker"></div><span class="skill-name">Docker</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/git.svg" class="skill-svg" alt="Git"></div><span class="skill-name">Git</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/linux.svg" class="skill-svg" alt="Linux"></div><span class="skill-name">Linux</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/figma.svg" class="skill-svg" alt="Figma"></div><span class="skill-name">Figma</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title physics-element"><span class="category-icon">→</span> Want to Learn</h3>
+                        <div class="skill-cards">
+                            <div class="skill-card physics-element future-skill"><div class="skill-icon-wrap"><img src="icons/swift.svg" class="skill-svg" alt="Swift"></div><span class="skill-name">Swift</span><div class="skill-bar"><div class="skill-fill" data-level="0"></div></div></div>
+                            <div class="skill-card physics-element future-skill"><div class="skill-icon-wrap"><img src="icons/go.svg" class="skill-svg" alt="Go"></div><span class="skill-name">Go</span><div class="skill-bar"><div class="skill-fill" data-level="0"></div></div></div>
+                            <div class="skill-card physics-element future-skill"><div class="skill-icon-wrap"><img src="icons/houdini.svg" class="skill-svg" alt="Houdini"></div><span class="skill-name">Houdini</span><div class="skill-bar"><div class="skill-fill" data-level="0"></div></div></div>
+                            <div class="skill-card physics-element future-skill"><div class="skill-icon-wrap"><img src="icons/ai.svg" class="skill-svg" alt="AI Engineering"></div><span class="skill-name">AI Engineering</span><div class="skill-bar"><div class="skill-fill" data-level="0"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="timeline-section">
+                <h2 class="section-title physics-element">
+                    <span class="title-decoration">&lt;</span>
+                    Timeline
+                    <span class="title-decoration">/&gt;</span>
+                </h2>
+                <div class="timeline">
+                    <div class="timeline-line"></div>
+
+                    <div class="timeline-year">2019</div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/python.svg" alt="Python"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Python</span>
+                                <span class="timeline-card-date">Oct 2019</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/pr.svg" alt="Premiere Pro"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Premiere Pro</span>
+                                <span class="timeline-card-date">Jul 2020</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/ae.svg" alt="After Effects"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning After Effects</span>
+                                <span class="timeline-card-date">Sep 2020</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-year">2021</div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/blender.svg" alt="Blender"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Blender</span>
+                                <span class="timeline-card-date">Jan 2021</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/unity.svg" alt="Unity"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Unity & C#</span>
+                                <span class="timeline-card-date">Feb 2021</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/figma.svg" alt="Figma"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Figma</span>
+                                <span class="timeline-card-date">Oct 2021</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/linux.svg" alt="Linux"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Linux & Git</span>
+                                <span class="timeline-card-date">Sep 2022</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/java.svg" alt="Java"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Java</span>
+                                <span class="timeline-card-date">Oct 2022</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/sql.svg" alt="SQL"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning SQL</span>
+                                <span class="timeline-card-date">Nov 2022</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/typescript.svg" alt="TypeScript"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning TypeScript</span>
+                                <span class="timeline-card-date">Dec 2022</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/davinci.svg" alt="DaVinci Resolve"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning DaVinci Resolve</span>
+                                <span class="timeline-card-date">Dec 2022</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/php.svg" alt="PHP"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning PHP</span>
+                                <span class="timeline-card-date">Apr 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/zbrush.svg" alt="zBrush"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning zBrush</span>
+                                <span class="timeline-card-date">May 2023</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/java.svg" alt="Java"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Returned to Java development</span>
+                                <span class="timeline-card-date">Feb 2024</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/docker.svg" alt="Docker"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Docker</span>
+                                <span class="timeline-card-date">Mar 2024</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/c%2B%2B.svg" alt="C++"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning C++</span>
+                                <span class="timeline-card-date">Mar 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/ue.svg" alt="UE5"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Unreal Engine 5</span>
+                                <span class="timeline-card-date">Apr 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/substancepainter.svg" alt="Substance Painter"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Substance Painter</span>
+                                <span class="timeline-card-date">May 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/raze.svg" alt="Raze"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started developing Raze</span>
+                                <span class="timeline-card-date">Oct 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/raze.svg" alt="Raze"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Launched Raze server</span>
+                                <span class="timeline-card-date">Dec 2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-year">2026</div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/raze.svg" alt="Raze"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Closed Raze server</span>
+                                <span class="timeline-card-date">Jan 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/ecco.svg" alt="ecco"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Created & closed ecco bot</span>
+                                <span class="timeline-card-date">Feb 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/hsb.svg" alt="H.S.B"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Created H.S.B bot</span>
+                                <span class="timeline-card-date">Mar 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="logo_site.svg" alt="Site"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Launched this website</span>
+                                <span class="timeline-card-date">Mar 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-icon"><img src="icons/rust.svg" alt="Rust"></div>
+                            <div class="timeline-card-info">
+                                <span class="timeline-card-title">Started learning Rust</span>
+                                <span class="timeline-card-date">Mar 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="projects-section">
+                <h2 class="section-title physics-element">
+                    <span class="title-decoration">&lt;</span>
+                    Projects
+                    <span class="title-decoration">/&gt;</span>
+                </h2>
+
+                <div class="projects-grid">
+                    <div class="project-card closed">
+                        <div class="project-preview">
+                            <div class="project-icon-wrap">
+                                <img src="icons/raze.svg" alt="Raze" class="project-icon">
+                            </div>
+                            <span class="project-name">Raze</span>
+                            <span class="project-badge">Closed</span>
+                        </div>
+                        <div class="project-details">
+                            <div class="project-tech">
+                                <div class="tech-icon-wrap"><img src="icons/java.svg" alt="Java" class="tech-icon"></div>
+                            </div>
+                            <p class="project-description">Raze was a military-political Minecraft server running version 1.20.1, created and released to the public in December 2025. Developed by myself, the entire server logic was written in Java and compiled into a single mod. The server featured a single PvP mode, Annihilation, with the destruction of military aircraft control points. The project was closed in January 2026 due to financial inability to maintain the server.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card closed">
+                        <div class="project-preview">
+                            <div class="project-icon-wrap">
+                                <img src="icons/ecco.svg" alt="ecco" class="project-icon">
+                            </div>
+                            <span class="project-name">ecco</span>
+                            <span class="project-badge">Closed</span>
+                        </div>
+                        <div class="project-details">
+                            <div class="project-tech">
+                                <div class="tech-icon-wrap"><img src="icons/python.svg" alt="Python" class="tech-icon"></div>
+                            </div>
+                            <p class="project-description">ecco is a solo experimental project created in February 2026 by myself. It is a universal Telegram bot for downloading high-quality media content from various platforms, such as YouTube, TikTok, Instagram, Pinterest, and SoundCloud. The project is written in Python and uses the yt-dlp library. Downloading from YouTube was suspended after a week due to accessibility issues. The project was closed due to its lack of relevance and the release of the server in favor of other projects.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card active">
+                        <div class="project-preview">
+                            <div class="project-icon-wrap">
+                                <img src="icons/hsb.svg" alt="H.S.B" class="project-icon">
+                            </div>
+                            <span class="project-name">H.S.B</span>
+                            <span class="project-badge active-badge">Active</span>
+                        </div>
+                        <div class="project-details">
+                            <div class="project-tech">
+                                <div class="tech-icon-wrap"><img src="icons/python.svg" alt="Python" class="tech-icon"></div>
+                            </div>
+                            <p class="project-description">H.S.B (Halyava Seeker Bot) is a Telegram bot created in 2026 by myself for discovering free and discounted games across multiple platforms, including Steam, Epic Games Store, GamerPower, and itch.io. Written in Python using the aiogram framework, the bot features automated giveaway tracking, new release notifications filtered by genre preferences, and a personal wishlist system with price drop alerts. The bot supports multiple languages and currencies, with scheduled background checks running every 30 minutes to 6 hours depending on the data source. 
+The bot is available on Telegram under the username @HSB_Pidorbot</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="setup-section">
+                <h2 class="section-title physics-element">
+                    <span class="title-decoration">&lt;</span>
+                    Setup
+                    <span class="title-decoration">/&gt;</span>
+                </h2>
+
+                <div class="setup-grid">
+                    <div class="setup-column">
+                        <h3 class="setup-category"># Hardware</h3>
+                        <ul class="setup-list">
+                            <li class="setup-item">&middot; Ryzen 5 3600</li>
+                            <li class="setup-item">&middot; 16 GB DDR4 3600 MHz</li>
+                            <li class="setup-item">&middot; Sapphire RX 580 8 GB</li>
+                            <li class="setup-item">&middot; Acer 23.8" 100 Hz</li>
+                            <li class="setup-item">&middot; Hator Rockfall 2 Mecha TKL</li>
+                        </ul>
+                    </div>
+                    <div class="setup-column">
+                        <h3 class="setup-category"># Software</h3>
+                        <ul class="setup-list">
+                            <li class="setup-item">&middot; Visual Studio</li>
+                            <li class="setup-item">&middot; Visual Studio Code</li>
+                            <li class="setup-item">&middot; PyCharm</li>
+                            <li class="setup-item">&middot; PhpStorm</li>
+                            <li class="setup-item">&middot; IntelliJ IDEA</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer physics-element">
+                <div class="footer-line"></div>
+                <p>&copy; 2026 ocb2016</p>
+            </footer>
+        </div>
+    </div>
+
+    <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
