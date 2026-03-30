@@ -751,6 +751,14 @@ body {
     color: var(--text-dim);
     line-height: 1.6;
 }
+.project-description a {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: none;
+    transition: opacity 0.3s ease;
+}
+.project-description a:hover { opacity: 0.7; }
 
 /* ========== SETUP ========== */
 .setup-section { padding: 0 0 100px; }
