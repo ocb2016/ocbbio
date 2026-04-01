@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:api.lanyard.rest)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(git status:*)"
     ]
   }
 }
