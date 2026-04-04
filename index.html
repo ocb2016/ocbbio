@@ -530,7 +530,7 @@ The bot is available on Telegram under the username @HSB_Pidorbot</p>
                             <div class="project-tech">
                                 <div class="tech-icon-wrap"><img src="icons/react.svg" alt="React" class="tech-icon"></div>
                             </div>
-                            <p class="project-description">SixteenCloud is a custom, unofficial SoundCloud fork with removed ads, regional restriction bypass, Discord Rich Presence, OAuth Token Login, a built-in track downloader, and many useful features. Created by me in April 2026, it's now live. <a href="https://github.com/ocb2016/ocbbio/releases/download/v2.0.4/SixteenCloud.Setup.2.0.4.exe" download class="project-link">Download it here.</a></p>
+                            <p class="project-description">SixteenCloud is a custom, unofficial SoundCloud fork with removed ads, regional restriction bypass, Discord Rich Presence, OAuth Token Login, a built-in track downloader, and many useful features. Created by me in April 2026, it's now live. <a href="https://github.com/ocb2016/ocbbio/releases/latest" class="project-link" id="sixteencloud-download">Download it here.</a></p>
                         </div>
                     </div>
                 </div>
@@ -578,6 +578,17 @@ The bot is available on Telegram under the username @HSB_Pidorbot</p>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
     </button>
 
+    <script>
+        fetch('https://api.github.com/repos/ocb2016/ocbbio/releases/latest')
+            .then(r => r.json())
+            .then(data => {
+                const exe = data.assets && data.assets.find(a => a.name.endsWith('.exe'));
+                if (exe) {
+                    document.getElementById('sixteencloud-download').href = exe.browser_download_url;
+                }
+            })
+            .catch(() => {});
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
