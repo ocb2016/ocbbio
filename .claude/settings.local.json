@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:api.lanyard.rest)",
       "Bash(curl:*)",
-      "Bash(git status:*)"
+      "Bash(git status:*)",
+      "WebFetch(domain:api.github.com)"
     ]
   }
 }
