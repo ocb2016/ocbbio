@@ -314,9 +314,10 @@ function updateDiscordCard(data) {
             }
         }
 
-        // Details line
-        if (activity.details) {
-            activityDetails.textContent = activity.details;
+        // Details line — for listening activities, show state (track name) instead of details (app name)
+        const detailText = activity.type === 2 ? (activity.state || activity.details) : activity.details;
+        if (detailText) {
+            activityDetails.textContent = detailText;
             activityDetails.style.display = 'block';
         } else {
             activityDetails.style.display = 'none';
