@@ -300,7 +300,7 @@ function updateDiscordCard(data) {
     if (activity) {
         activityWrap.classList.add('active');
         activityLabel.textContent = { 0: 'Playing', 1: 'Streaming', 2: 'Listening to', 3: 'Watching', 5: 'Competing in' }[activity.type] || 'Playing';
-        activityName.textContent = activity.name;
+        activityName.textContent = (activity.type === 2 && activity.details) ? activity.details : activity.name;
 
         // Activity image (Rich Presence)
         const largeImage = activity.assets?.large_image;
@@ -314,9 +314,10 @@ function updateDiscordCard(data) {
             }
         }
 
-        // Details line
-        if (activity.details) {
-            activityDetails.textContent = activity.details;
+        // Details line — for listening, show artist (state) since name already shows track
+        const detailText = (activity.type === 2 && activity.state) ? activity.state : activity.details;
+        if (detailText) {
+            activityDetails.textContent = detailText;
             activityDetails.style.display = 'block';
         } else {
             activityDetails.style.display = 'none';
