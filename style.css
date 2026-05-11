@@ -671,6 +671,15 @@ body {
     border-color: rgba(34, 197, 94, 0.3);
 }
 
+.paused-badge {
+    color: #eab308;
+    border-color: rgba(234, 179, 8, 0.3);
+}
+
+.project-card.paused .project-icon {
+    filter: grayscale(100%) brightness(0.5);
+}
+
 .project-name {
     font-family: var(--font-mono);
     font-size: 15px;
