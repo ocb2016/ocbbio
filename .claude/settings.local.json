@@ -7,7 +7,9 @@
       "WebFetch(domain:api.github.com)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "mcp__codegraph__codegraph_files",
+      "Bash(git commit -m 'Убран блок MIMIC, обновлены уровни Python/Java/C# *)"
     ]
   }
 }
