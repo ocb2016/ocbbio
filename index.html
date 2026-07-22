@@ -3,74 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ocb2016 | bio</title>
-    <meta name="description" content="ocb2016 — developer, 3D artist & creator. Portfolio & projects.">
-    <meta name="theme-color" content="#0a0a0c">
-    <meta property="og:title" content="ocb2016 | bio">
+    <title>ocb | bio</title>
+    <meta name="description" content="ocb — developer, 3D artist & creator. Portfolio & projects.">
+    <meta name="theme-color" content="#0b0c0a">
+    <meta property="og:title" content="ocb | bio">
     <meta property="og:description" content="developer / 3d artist / creator — portfolio & projects">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://ocb2016.me/img/pfp.jpg">
     <meta property="og:url" content="https://ocb2016.me/">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="ocb2016 | bio">
+    <meta name="twitter:title" content="ocb | bio">
     <meta name="twitter:description" content="developer / 3d artist / creator — portfolio & projects">
     <meta name="twitter:image" content="https://ocb2016.me/img/pfp.jpg">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
-    <link rel="icon" type="image/svg+xml" href="logo_site.svg">
+    <link rel="icon" type="image/svg+xml" href="icons/ocb_new_logo.svg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ========== PRELOADER ========== -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <span class="preloader-logo">ocb2016</span>
-        </div>
-        <div class="preloader-bar">
-            <div class="preloader-bar-fill"></div>
-        </div>
-    </div>
+    <div class="copy-toast" id="copyToast">Username copied.</div>
 
-    <canvas id="particles"></canvas>
-
-    <audio id="ambient" loop preload="auto">
-        <source src="audio/ambient.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="copy-toast" id="copyToast">[ username copied to clipboard ]</div>
-
-    <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">
-        <svg class="sound-icon sound-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-            <line x1="23" y1="9" x2="17" y2="15"/>
-            <line x1="17" y1="9" x2="23" y2="15"/>
-        </svg>
-        <svg class="sound-icon sound-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-        </svg>
-    </button>
-
-    <button class="moon-btn" id="moonBtn" aria-label="Flip!">
-        <img src="icons/moon.svg" alt="Moon">
-    </button>
-
-    <div class="flip-wrapper" id="flipWrapper">
-        <div class="container">
+    <div class="container">
             <header class="hero">
-                <div class="hero-glow"></div>
-
                 <div class="discord-card physics-element" id="discordCard">
                     <img class="dc-badge" src="icons/discord.svg" alt="">
                     <div class="dc-left">
                         <div class="dc-avatar-wrap">
-                            <img src="img/pfp.jpg" alt="avatar" class="dc-avatar">
+                            <img src="img/zayac.png" alt="Avatar of ocb" class="dc-avatar">
                             <span class="dc-status-dot" id="dcStatusDot"></span>
                         </div>
                     </div>
                     <div class="dc-info">
-                        <span class="dc-username">ocb2016</span>
+                        <span class="dc-username">ocbxvi</span>
                         <span class="dc-status-text" id="dcStatusText" style="display:none">Offline</span>
                         <div class="dc-activity" id="dcActivity">
                             <img class="dc-activity-img" id="dcActivityImg" style="display:none">
@@ -85,11 +49,11 @@
                     </div>
                 </div>
 
-                <h1 class="title physics-element">ocb2016</h1>
+                <h1 class="title physics-element">ocb</h1>
                 <p class="tagline physics-element">developer <span class="separator">/</span> 3d artist <span class="separator">/</span> creator</p>
 
                 <div class="socials physics-element">
-                    <a href="https://t.me/ocb2016" target="_blank" class="social-btn" aria-label="Telegram" data-tooltip="Telegram">
+                    <a href="https://t.me/ocbxvi" target="_blank" class="social-btn" aria-label="Telegram" data-tooltip="Telegram">
                         <img src="icons/telegram.svg" alt="Telegram">
                     </a>
                     <button class="social-btn" id="discordCopyBtn" aria-label="Discord" data-tooltip="Discord">
@@ -105,15 +69,11 @@
             </header>
 
             <section class="skills-section">
-                <h2 class="section-title physics-element">
-                    <span class="title-decoration">&lt;</span>
-                    Skills
-                    <span class="title-decoration">/&gt;</span>
-                </h2>
+                <h2 class="section-title physics-element">Skills</h2>
 
                 <div class="skills-grid">
                     <div class="skill-category">
-                        <h3 class="category-title physics-element"><span class="category-icon">~</span> Programming</h3>
+                        <h3 class="category-title physics-element">Programming</h3>
                         <div class="skill-cards">
                             <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/python.svg" class="skill-svg" alt="Python"></div><span class="skill-name">Python</span><div class="skill-bar"><div class="skill-fill" data-level="75"></div></div></div>
                             <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/java.svg" class="skill-svg" alt="Java"></div><span class="skill-name">Java</span><div class="skill-bar"><div class="skill-fill" data-level="50"></div></div></div>
@@ -127,7 +87,7 @@
                     </div>
 
                     <div class="skill-category">
-                        <h3 class="category-title physics-element"><span class="category-icon">></span> Game Engines</h3>
+                        <h3 class="category-title physics-element">Game Engines</h3>
                         <div class="skill-cards">
                             <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/unity.svg" class="skill-svg" alt="Unity"></div><span class="skill-name">Unity</span><div class="skill-bar"><div class="skill-fill" data-level="90"></div></div></div>
                             <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/ue.svg" class="skill-svg" alt="UE5"></div><span class="skill-name">Unreal Engine 5</span><div class="skill-bar"><div class="skill-fill" data-level="20"></div></div></div>
@@ -135,7 +95,7 @@
                     </div>
 
                     <div class="skill-category">
-                        <h3 class="category-title physics-element"><span class="category-icon">#</span> 3D Art</h3>
+                        <h3 class="category-title physics-element">3D Art</h3>
                         <div class="skill-cards">
                             <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/blender.svg" class="skill-svg" alt="Blender"></div><span class="skill-name">Blender</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
                             <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/zbrush.svg" class="skill-svg" alt="zBrush"></div><span class="skill-name">zBrush</span><div class="skill-bar"><div class="skill-fill" data-level="70"></div></div></div>
@@ -144,7 +104,7 @@
                     </div>
 
                     <div class="skill-category">
-                        <h3 class="category-title physics-element"><span class="category-icon">%</span> Video Editing</h3>
+                        <h3 class="category-title physics-element">Video Editing</h3>
                         <div class="skill-cards">
                             <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/pr.svg" class="skill-svg" alt="Premiere Pro"></div><span class="skill-name">Premiere Pro</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
                             <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/davinci.svg" class="skill-svg" alt="DaVinci Resolve"></div><span class="skill-name">DaVinci Resolve</span><div class="skill-bar"><div class="skill-fill" data-level="75"></div></div></div>
@@ -153,7 +113,7 @@
                     </div>
 
                     <div class="skill-category">
-                        <h3 class="category-title physics-element"><span class="category-icon">@</span> DevOps & Tools</h3>
+                        <h3 class="category-title physics-element">DevOps &amp; Tools</h3>
                         <div class="skill-cards">
                             <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/docker.svg" class="skill-svg" alt="Docker"></div><span class="skill-name">Docker</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
                             <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/git.svg" class="skill-svg" alt="Git"></div><span class="skill-name">Git</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
@@ -163,7 +123,7 @@
                     </div>
 
                     <div class="skill-category">
-                        <h3 class="category-title physics-element"><span class="category-icon">→</span> Want to Learn</h3>
+                        <h3 class="category-title physics-element">Want to Learn</h3>
                         <div class="skill-cards">
                             <div class="skill-card physics-element future-skill"><div class="skill-icon-wrap"><img src="icons/swift.svg" class="skill-svg" alt="Swift"></div><span class="skill-name">Swift</span><div class="skill-bar"><div class="skill-fill" data-level="0"></div></div></div>
                             <div class="skill-card physics-element future-skill"><div class="skill-icon-wrap"><img src="icons/go.svg" class="skill-svg" alt="Go"></div><span class="skill-name">Go</span><div class="skill-bar"><div class="skill-fill" data-level="0"></div></div></div>
@@ -175,11 +135,7 @@
             </section>
 
             <section class="timeline-section">
-                <h2 class="section-title physics-element">
-                    <span class="title-decoration">&lt;</span>
-                    Timeline
-                    <span class="title-decoration">/&gt;</span>
-                </h2>
+                <h2 class="section-title physics-element">Timeline</h2>
                 <div class="timeline">
                     <div class="timeline-line"></div>
 
@@ -502,11 +458,7 @@
             </section>
 
             <section class="projects-section">
-                <h2 class="section-title physics-element">
-                    <span class="title-decoration">&lt;</span>
-                    Projects
-                    <span class="title-decoration">/&gt;</span>
-                </h2>
+                <h2 class="section-title physics-element">Projects</h2>
 
                 <div class="projects-grid">
                     <div class="project-card paused">
@@ -641,41 +593,36 @@ The bot is available on Telegram under the username @HSB_Pidorbot</p>
             </section>
 
             <section class="setup-section">
-                <h2 class="section-title physics-element">
-                    <span class="title-decoration">&lt;</span>
-                    Setup
-                    <span class="title-decoration">/&gt;</span>
-                </h2>
+                <h2 class="section-title physics-element">Setup</h2>
 
                 <div class="setup-grid">
                     <div class="setup-column">
-                        <h3 class="setup-category"># Hardware</h3>
+                        <h3 class="setup-category">Hardware</h3>
                         <ul class="setup-list">
-                            <li class="setup-item">&middot; Ryzen 5 3600</li>
-                            <li class="setup-item">&middot; 16 GB DDR4 3600 MHz</li>
-                            <li class="setup-item">&middot; Sapphire RX 580 8 GB</li>
-                            <li class="setup-item">&middot; Acer 23.8" 100 Hz</li>
-                            <li class="setup-item">&middot; Hator Rockfall 2 Mecha TKL</li>
+                            <li class="setup-item">Ryzen 5 3600</li>
+                            <li class="setup-item">16 GB DDR4 3600 MHz</li>
+                            <li class="setup-item">Sapphire RX 580 8 GB</li>
+                            <li class="setup-item">Acer 23.8" 100 Hz</li>
+                            <li class="setup-item">Hator Rockfall 2 Mecha TKL</li>
                         </ul>
                     </div>
                     <div class="setup-column">
-                        <h3 class="setup-category"># Software</h3>
+                        <h3 class="setup-category">Software</h3>
                         <ul class="setup-list">
-                            <li class="setup-item">&middot; Visual Studio</li>
-                            <li class="setup-item">&middot; Visual Studio Code</li>
-                            <li class="setup-item">&middot; PyCharm</li>
-                            <li class="setup-item">&middot; PhpStorm</li>
-                            <li class="setup-item">&middot; IntelliJ IDEA</li>
+                            <li class="setup-item">Visual Studio</li>
+                            <li class="setup-item">Visual Studio Code</li>
+                            <li class="setup-item">PyCharm</li>
+                            <li class="setup-item">PhpStorm</li>
+                            <li class="setup-item">IntelliJ IDEA</li>
                         </ul>
                     </div>
                 </div>
             </section>
 
-            <footer class="footer physics-element">
+            <footer class="footer">
                 <div class="footer-line"></div>
-                <p>&copy; 2026 ocb2016</p>
+                <p>&copy; 2026 ocb</p>
             </footer>
-        </div>
     </div>
 
     <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
