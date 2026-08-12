@@ -50,6 +50,9 @@
     let clickCount = 0;
     let clickResetTimer = null;
     let sectionTargets = [];
+    /** Bumped to abort an in-flight flip when we need an instant snap */
+    let flipGen = 0;
+    let lastSectionChangeAt = 0;
 
     function waitTransition(el) {
         return new Promise((resolve) => {
@@ -65,7 +68,7 @@
                 finish();
             };
             el.addEventListener("transitionend", done);
-            window.setTimeout(finish, 320);
+            window.setTimeout(finish, 280);
         });
     }
 
@@ -115,9 +118,12 @@
     }
 
     async function flipToLetters(letters) {
+        const gen = ++flipGen;
+
         cssFlipper.classList.remove("is-enter", "is-enter-prep");
         cssFlipper.classList.add("is-exit");
         await waitTransition(cssFlipper);
+        if (gen !== flipGen) return false;
 
         applyLetters(letters);
         cssFlipper.classList.remove("is-exit");
@@ -126,16 +132,17 @@
         cssFlipper.classList.remove("is-enter-prep");
         cssFlipper.classList.add("is-enter");
         await waitTransition(cssFlipper);
+        if (gen !== flipGen) return false;
+
         cssFlipper.classList.remove("is-enter");
+        return true;
     }
 
-    /**
-     * Always re-read scroll position and match the cube to it.
-     * Safe to call anytime (scroll, after easter, after flip).
-     */
-    async function syncCube({ animate = true } = {}) {
-        const key = resolveActiveKey();
+    /** Instant face change — aborts any flip in progress. */
+    function snapToKey(key) {
         const conf = CUBE_MAP[key];
+        flipGen += 1;
+        busy = false;
 
         if (!conf) {
             rail.classList.add("is-hidden");
@@ -144,6 +151,23 @@
         }
 
         rail.classList.remove("is-hidden");
+        applyLetters(conf.letters);
+        cssFlipper.className = "cube-3d-flipper";
+        displayedKey = key;
+    }
+
+    /**
+     * Match cube to the section under the viewport.
+     * animate:true → flip (slow browsing). animate:false / busy / rapid → snap.
+     */
+    async function syncCube({ animate = true } = {}) {
+        const key = resolveActiveKey();
+        const conf = CUBE_MAP[key];
+
+        if (!conf) {
+            snapToKey(key);
+            return;
+        }
 
         // Easter owns the faces until it finishes — then it will sync again
         if (easterActive) return;
@@ -151,25 +175,24 @@
         // Already showing the right section
         if (displayedKey === key) return;
 
-        // Another flip in flight — it will re-sync when done
-        if (busy) return;
+        // Mid-flip or forced snap: update immediately, no queue
+        if (!animate || busy) {
+            snapToKey(key);
+            return;
+        }
 
         busy = true;
         try {
-            // animate:true always flips — even when displayedKey is null (after easter)
-            if (animate) {
-                await flipToLetters(conf.letters);
-            } else {
-                applyLetters(conf.letters);
-                cssFlipper.className = "cube-3d-flipper";
+            const finished = await flipToLetters(conf.letters);
+            if (finished) {
+                displayedKey = key;
             }
-            displayedKey = key;
         } finally {
             busy = false;
-            // Scroll may have changed during the flip — re-verify
+            // Catch up without starting another flip chain
             const latest = resolveActiveKey();
             if (!easterActive && latest !== displayedKey) {
-                syncCube({ animate: true });
+                snapToKey(latest);
             }
         }
     }
@@ -245,44 +268,34 @@
 
         if (!sectionTargets.length) return;
 
-        let placeTicking = false;
-        let idleTimer = null;
-        const IDLE_MS = 140;
+        let ticking = false;
+        /** Section changes closer than this → snap instead of flip (avoids lag queue). */
+        const RAPID_MS = 260;
 
-        /** Reposition every frame while scrolling; don't flip yet. */
-        const placeOnScroll = () => {
-            if (placeTicking) return;
-            placeTicking = true;
+        const onScrollOrResize = (fromResize = false) => {
+            if (ticking) return;
+            ticking = true;
             requestAnimationFrame(() => {
-                placeTicking = false;
+                ticking = false;
                 placeCubeRail();
+
+                const key = resolveActiveKey();
+                if (key === displayedKey || easterActive) return;
+
+                const now = performance.now();
+                const rapid = !fromResize && (now - lastSectionChangeAt) < RAPID_MS;
+                lastSectionChangeAt = now;
+
+                // Immediate: flip when browsing slowly, snap when scrubbing fast / resize
+                syncCube({ animate: !fromResize && !rapid });
             });
         };
 
-        /**
-         * Flip only after scroll settles. Rapid scrubbing → one flip at the end,
-         * not a queue of mid-scroll animations.
-         */
-        const onScroll = () => {
-            placeOnScroll();
-            window.clearTimeout(idleTimer);
-            idleTimer = window.setTimeout(() => {
-                syncCube({ animate: true });
-            }, IDLE_MS);
-        };
-
-        const onResize = () => {
-            placeCubeRail();
-            window.clearTimeout(idleTimer);
-            // Resize: snap letters, no flip
-            syncCube({ animate: false });
-        };
-
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", onResize, { passive: true });
+        window.addEventListener("scroll", () => onScrollOrResize(false), { passive: true });
+        window.addEventListener("resize", () => onScrollOrResize(true), { passive: true });
         if (window.visualViewport) {
-            window.visualViewport.addEventListener("resize", onResize, { passive: true });
-            window.visualViewport.addEventListener("scroll", onScroll, { passive: true });
+            window.visualViewport.addEventListener("resize", () => onScrollOrResize(true), { passive: true });
+            window.visualViewport.addEventListener("scroll", () => onScrollOrResize(false), { passive: true });
         }
 
         // Initial paint — place first, then unhide (avoids left:fallback → real jump)
