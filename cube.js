@@ -279,6 +279,13 @@
 
     function onCubeClick(event) {
         event.preventDefault();
+        // Drop focus so the browser never draws a focus ring after multi-click easter
+        if (event.currentTarget instanceof HTMLElement) {
+            event.currentTarget.blur();
+        } else {
+            cubeHit?.blur();
+        }
+
         clickCount += 1;
         window.clearTimeout(clickResetTimer);
         clickResetTimer = window.setTimeout(() => {

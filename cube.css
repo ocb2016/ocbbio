@@ -16,6 +16,9 @@
     height: 228px;
     pointer-events: none;
     overflow: visible;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Hidden until placeCubeRail() sets the real left — no transition so no jump-fade */
@@ -62,11 +65,19 @@
     background: transparent;
     border: 0;
     padding: 0;
+    outline: none;
+    box-shadow: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.cube-hit:focus-visible {
-    outline: 1px solid var(--signal);
-    outline-offset: 4px;
+/* 5-click easter focuses the button — never show a red focus “frame” */
+.cube-hit:focus,
+.cube-hit:focus-visible,
+.cube-hit:active {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 /* ===== CSS 3D cube ===== */
@@ -133,8 +144,10 @@
     line-height: 1;
     letter-spacing: -0.03em;
     text-transform: uppercase;
+    -webkit-user-select: none;
     user-select: none;
     box-shadow: none;
+    outline: none;
     -webkit-font-smoothing: antialiased;
 }
 

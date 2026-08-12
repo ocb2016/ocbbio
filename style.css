@@ -38,6 +38,17 @@ html {
     color-scheme: dark;
 }
 
+/* Darker brand red so white/ink text stays readable when selected */
+::selection {
+    background: #9e0000;
+    color: #f0f3ed;
+}
+
+::-moz-selection {
+    background: #9e0000;
+    color: #f0f3ed;
+}
+
 body {
     position: relative;
     min-width: 320px;
