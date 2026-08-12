@@ -1,11 +1,10 @@
 /* ===== Section cube rail ===== */
 
 .cube-rail {
-    /* Face size == cube size so edges meet; inset faces left a red “frame” seam */
-    --cube-size: 132px;
-    --face-size: 132px;
+    --cube-size: 138px;
+    --face-size: 126px;
     --cube-half: calc(var(--cube-size) / 2);
-    --face-inset: 0px;
+    --face-inset: calc((var(--cube-size) - var(--face-size)) / 2);
     --logo-red: #ec0000;
 
     position: fixed;
@@ -128,7 +127,7 @@
     background: var(--logo-red);
     color: #fff;
     font-family: "Montserrat", system-ui, sans-serif;
-    font-size: 74px;
+    font-size: 78px;
     font-weight: 900;
     font-style: normal;
     line-height: 1;
@@ -136,33 +135,31 @@
     text-transform: uppercase;
     user-select: none;
     box-shadow: none;
-    /* Kill subpixel hairline gaps between faces (reads as a red frame) */
-    outline: 1px solid var(--logo-red);
     -webkit-font-smoothing: antialiased;
 }
 
 .cube-face[data-face="front"] {
-    transform: rotateY(0deg) translateZ(calc(var(--cube-half) - 0.5px));
+    transform: rotateY(0deg) translateZ(var(--cube-half));
 }
 
 .cube-face[data-face="back"] {
-    transform: rotateY(180deg) translateZ(calc(var(--cube-half) - 0.5px));
+    transform: rotateY(180deg) translateZ(var(--cube-half));
 }
 
 .cube-face[data-face="right"] {
-    transform: rotateY(90deg) translateZ(calc(var(--cube-half) - 0.5px));
+    transform: rotateY(90deg) translateZ(var(--cube-half));
 }
 
 .cube-face[data-face="left"] {
-    transform: rotateY(-90deg) translateZ(calc(var(--cube-half) - 0.5px));
+    transform: rotateY(-90deg) translateZ(var(--cube-half));
 }
 
 .cube-face[data-face="top"] {
-    transform: rotateX(90deg) translateZ(calc(var(--cube-half) - 0.5px));
+    transform: rotateX(90deg) translateZ(var(--cube-half));
 }
 
 .cube-face[data-face="bottom"] {
-    transform: rotateX(-90deg) translateZ(calc(var(--cube-half) - 0.5px));
+    transform: rotateX(-90deg) translateZ(var(--cube-half));
 }
 
 .cube-3d-iso::after {
