@@ -50,9 +50,6 @@
     let clickCount = 0;
     let clickResetTimer = null;
     let sectionTargets = [];
-    /** Bumped to abort an in-flight flip when we need an instant snap */
-    let flipGen = 0;
-    let lastSectionChangeAt = 0;
 
     function waitTransition(el) {
         return new Promise((resolve) => {
@@ -68,7 +65,7 @@
                 finish();
             };
             el.addEventListener("transitionend", done);
-            window.setTimeout(finish, 280);
+            window.setTimeout(finish, 320);
         });
     }
 
@@ -118,12 +115,9 @@
     }
 
     async function flipToLetters(letters) {
-        const gen = ++flipGen;
-
         cssFlipper.classList.remove("is-enter", "is-enter-prep");
         cssFlipper.classList.add("is-exit");
         await waitTransition(cssFlipper);
-        if (gen !== flipGen) return false;
 
         applyLetters(letters);
         cssFlipper.classList.remove("is-exit");
@@ -132,17 +126,16 @@
         cssFlipper.classList.remove("is-enter-prep");
         cssFlipper.classList.add("is-enter");
         await waitTransition(cssFlipper);
-        if (gen !== flipGen) return false;
-
         cssFlipper.classList.remove("is-enter");
-        return true;
     }
 
-    /** Instant face change — aborts any flip in progress. */
-    function snapToKey(key) {
+    /**
+     * Always re-read scroll position and match the cube to it.
+     * Safe to call anytime (scroll, after easter, after flip).
+     */
+    async function syncCube({ animate = true } = {}) {
+        const key = resolveActiveKey();
         const conf = CUBE_MAP[key];
-        flipGen += 1;
-        busy = false;
 
         if (!conf) {
             rail.classList.add("is-hidden");
@@ -151,23 +144,6 @@
         }
 
         rail.classList.remove("is-hidden");
-        applyLetters(conf.letters);
-        cssFlipper.className = "cube-3d-flipper";
-        displayedKey = key;
-    }
-
-    /**
-     * Match cube to the section under the viewport.
-     * animate:true → flip (slow browsing). animate:false / busy / rapid → snap.
-     */
-    async function syncCube({ animate = true } = {}) {
-        const key = resolveActiveKey();
-        const conf = CUBE_MAP[key];
-
-        if (!conf) {
-            snapToKey(key);
-            return;
-        }
 
         // Easter owns the faces until it finishes — then it will sync again
         if (easterActive) return;
@@ -175,24 +151,24 @@
         // Already showing the right section
         if (displayedKey === key) return;
 
-        // Mid-flip or forced snap: update immediately, no queue
-        if (!animate || busy) {
-            snapToKey(key);
-            return;
-        }
+        // Another flip in flight — it will re-sync when done
+        if (busy) return;
 
         busy = true;
         try {
-            const finished = await flipToLetters(conf.letters);
-            if (finished) {
-                displayedKey = key;
+            if (animate) {
+                await flipToLetters(conf.letters);
+            } else {
+                applyLetters(conf.letters);
+                cssFlipper.className = "cube-3d-flipper";
             }
+            displayedKey = key;
         } finally {
             busy = false;
-            // Catch up without starting another flip chain
+            // Scroll may have changed during the flip — re-verify
             const latest = resolveActiveKey();
             if (!easterActive && latest !== displayedKey) {
-                snapToKey(latest);
+                syncCube({ animate: true });
             }
         }
     }
@@ -269,33 +245,21 @@
         if (!sectionTargets.length) return;
 
         let ticking = false;
-        /** Section changes closer than this → snap instead of flip (avoids lag queue). */
-        const RAPID_MS = 260;
-
-        const onScrollOrResize = (fromResize = false) => {
+        const onScrollOrResize = () => {
             if (ticking) return;
             ticking = true;
             requestAnimationFrame(() => {
                 ticking = false;
                 placeCubeRail();
-
-                const key = resolveActiveKey();
-                if (key === displayedKey || easterActive) return;
-
-                const now = performance.now();
-                const rapid = !fromResize && (now - lastSectionChangeAt) < RAPID_MS;
-                lastSectionChangeAt = now;
-
-                // Immediate: flip when browsing slowly, snap when scrubbing fast / resize
-                syncCube({ animate: !fromResize && !rapid });
+                syncCube({ animate: true });
             });
         };
 
-        window.addEventListener("scroll", () => onScrollOrResize(false), { passive: true });
-        window.addEventListener("resize", () => onScrollOrResize(true), { passive: true });
+        window.addEventListener("scroll", onScrollOrResize, { passive: true });
+        window.addEventListener("resize", onScrollOrResize, { passive: true });
         if (window.visualViewport) {
-            window.visualViewport.addEventListener("resize", () => onScrollOrResize(true), { passive: true });
-            window.visualViewport.addEventListener("scroll", () => onScrollOrResize(false), { passive: true });
+            window.visualViewport.addEventListener("resize", onScrollOrResize, { passive: true });
+            window.visualViewport.addEventListener("scroll", onScrollOrResize, { passive: true });
         }
 
         // Initial paint — place first, then unhide (avoids left:fallback → real jump)

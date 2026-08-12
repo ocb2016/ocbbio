@@ -94,7 +94,7 @@
     width: var(--cube-size);
     height: var(--cube-size);
     transform-style: preserve-3d;
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
     pointer-events: auto;
     cursor: pointer;
@@ -111,7 +111,7 @@
 }
 
 .cube-3d-flipper.is-enter {
-    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     transform: rotateX(0deg);
 }
 
