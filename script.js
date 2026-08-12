@@ -233,29 +233,77 @@ function groupTimelineByYear() {
 
 groupTimelineByYear();
 
-/** Featured stays open; closed list is collapsed by default. */
+/** Featured stays open; closed list animates open/close with staggered cards. */
 function initClosedProjectsToggle() {
     if (!closedToggle || !closedProjects) return;
 
     const label = closedToggle.querySelector(".projects-toggle-label");
+    const cards = () => [...closedProjects.querySelectorAll(".project-card")];
+    let animating = false;
+
+    const setLabel = (open) => {
+        if (label) label.textContent = open ? "Hide closed" : "Show closed";
+    };
+
+    const openClosed = () => {
+        animating = true;
+        closedProjects.hidden = false;
+        closedProjects.classList.remove("is-closing");
+
+        const list = cards();
+        list.forEach((card) => {
+            card.classList.remove("is-visible");
+            card.style.setProperty("--reveal-delay", "0ms");
+        });
+
+        // Reflow so the browser sees opacity:0 before we animate in
+        void closedProjects.offsetWidth;
+
+        list.forEach((card, i) => {
+            const delayMs = Math.min(i, 8) * 55;
+            card.style.setProperty("--reveal-delay", `${delayMs}ms`);
+            requestAnimationFrame(() => card.classList.add("is-visible"));
+        });
+
+        window.setTimeout(() => {
+            animating = false;
+        }, Math.min(list.length, 8) * 55 + 480);
+    };
+
+    const closeClosed = () => {
+        animating = true;
+        const list = cards();
+
+        // Reverse stagger: last card fades first feels a bit nicer on collapse
+        list.forEach((card, i) => {
+            const delayMs = Math.min(list.length - 1 - i, 8) * 40;
+            card.style.setProperty("--reveal-delay", `${delayMs}ms`);
+            requestAnimationFrame(() => card.classList.remove("is-visible"));
+        });
+
+        closedProjects.classList.add("is-closing");
+
+        const doneMs = Math.min(list.length, 8) * 40 + 450;
+        window.setTimeout(() => {
+            closedProjects.hidden = true;
+            closedProjects.classList.remove("is-closing");
+            list.forEach((card) => {
+                card.style.setProperty("--reveal-delay", "0ms");
+            });
+            animating = false;
+        }, doneMs);
+    };
 
     closedToggle.addEventListener("click", () => {
+        if (animating) return;
+
         const open = closedToggle.getAttribute("aria-expanded") === "true";
         const next = !open;
         closedToggle.setAttribute("aria-expanded", String(next));
-        closedProjects.hidden = !next;
-        if (label) {
-            label.textContent = next ? "Hide closed" : "Show closed";
-        }
+        setLabel(next);
 
-        // Hidden cards never hit IntersectionObserver — force-reveal on open
-        if (next) {
-            closedProjects.querySelectorAll(".project-card").forEach((card, i) => {
-                if (!card.classList.contains("is-visible")) {
-                    paintReveal(card, Math.min(i, 8) * 40);
-                }
-            });
-        }
+        if (next) openClosed();
+        else closeClosed();
     });
 }
 
@@ -302,7 +350,7 @@ initNavSpy();
 
 const revealTargets = [
     ...document.querySelectorAll(".physics-element, .skill-category, .project-card, .setup-grid")
-];
+].filter((el) => !el.closest("#closedProjects"));
 
 function paintReveal(target, delayMs) {
     target.style.setProperty("--reveal-delay", `${delayMs}ms`);
