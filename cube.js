@@ -245,22 +245,44 @@
 
         if (!sectionTargets.length) return;
 
-        let ticking = false;
-        const onScrollOrResize = () => {
-            if (ticking) return;
-            ticking = true;
+        let placeTicking = false;
+        let idleTimer = null;
+        const IDLE_MS = 140;
+
+        /** Reposition every frame while scrolling; don't flip yet. */
+        const placeOnScroll = () => {
+            if (placeTicking) return;
+            placeTicking = true;
             requestAnimationFrame(() => {
-                ticking = false;
+                placeTicking = false;
                 placeCubeRail();
-                syncCube({ animate: true });
             });
         };
 
-        window.addEventListener("scroll", onScrollOrResize, { passive: true });
-        window.addEventListener("resize", onScrollOrResize, { passive: true });
+        /**
+         * Flip only after scroll settles. Rapid scrubbing → one flip at the end,
+         * not a queue of mid-scroll animations.
+         */
+        const onScroll = () => {
+            placeOnScroll();
+            window.clearTimeout(idleTimer);
+            idleTimer = window.setTimeout(() => {
+                syncCube({ animate: true });
+            }, IDLE_MS);
+        };
+
+        const onResize = () => {
+            placeCubeRail();
+            window.clearTimeout(idleTimer);
+            // Resize: snap letters, no flip
+            syncCube({ animate: false });
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onResize, { passive: true });
         if (window.visualViewport) {
-            window.visualViewport.addEventListener("resize", onScrollOrResize, { passive: true });
-            window.visualViewport.addEventListener("scroll", onScrollOrResize, { passive: true });
+            window.visualViewport.addEventListener("resize", onResize, { passive: true });
+            window.visualViewport.addEventListener("scroll", onScroll, { passive: true });
         }
 
         // Initial paint — place first, then unhide (avoids left:fallback → real jump)

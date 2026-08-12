@@ -545,6 +545,18 @@ img {
     flex: 1;
     background: var(--rule);
     content: "";
+    transform: scaleX(1);
+    transform-origin: left center;
+}
+
+/* Line draws in when the title reveals */
+.motion-ready .section-title.physics-element::after {
+    transform: scaleX(0);
+}
+
+.motion-ready .section-title.physics-element.is-visible::after {
+    transform: scaleX(1);
+    transition: transform 720ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
 }
 
 .projects-subtitle {
@@ -1454,5 +1466,9 @@ img {
 
     .nav-island {
         transition: none;
+    }
+
+    .motion-ready .section-title.physics-element::after {
+        transform: scaleX(1);
     }
 }
