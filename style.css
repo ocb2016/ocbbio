@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800;900&family=Unbounded:wght@600;700;800&display=swap");
+/* Two families only: Unbounded = display, Montserrat = everything else.
+   No mono — thin coding faces clashed with the geometric display vibe. */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Unbounded:wght@600;700;800&display=swap");
 
 :root {
     --black: #0b0c0a;
@@ -11,10 +13,9 @@
     /* Main brand = logo red */
     --signal: #ec0000;
     --danger: #ff5f56;
-    --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
     --font-sans: "Montserrat", system-ui, sans-serif;
     --font-display: "Unbounded", "Montserrat", system-ui, sans-serif;
-    --font: var(--font-mono);
+    --font: var(--font-sans);
 }
 
 *,
@@ -49,10 +50,12 @@ body {
     background-image:
         linear-gradient(180deg, #0d0e0c 0%, var(--black) 240px, #0a0b09 100%);
     color: var(--ink);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 15px;
+    font-weight: 500;
     font-variant-numeric: tabular-nums;
     line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* Touch only: kill rubber-band white flash without breaking desktop wheel */
@@ -107,10 +110,10 @@ img {
 .nav-link {
     padding: 6px 10px;
     color: var(--muted);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-decoration: none;
     text-transform: uppercase;
     transition: color 160ms ease;
@@ -262,10 +265,10 @@ img {
     border: 1px solid var(--signal);
     background: var(--signal);
     color: var(--black);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-weight: 800;
+    letter-spacing: 0.05em;
     text-decoration: none;
     text-transform: uppercase;
     transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
@@ -436,6 +439,7 @@ img {
 }
 
 .dc-username {
+    font-family: var(--font-sans);
     font-size: 15px;
     font-weight: 700;
 }
@@ -493,7 +497,9 @@ img {
     border: 1px solid var(--signal);
     background: var(--surface-raised);
     color: var(--ink);
+    font-family: var(--font-sans);
     font-size: 12px;
+    font-weight: 600;
     opacity: 0;
     pointer-events: none;
     transform: translateY(10px);
@@ -569,8 +575,10 @@ img {
 .setup-category {
     margin-bottom: 18px;
     color: var(--signal);
+    font-family: var(--font-sans);
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     /* Keep title on a stable paint layer — avoid AA fringe flash on neighbor hover */
     -webkit-font-smoothing: antialiased;
@@ -632,8 +640,9 @@ img {
 .skill-name {
     min-width: 0;
     color: var(--ink);
+    font-family: var(--font-sans);
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.25;
     overflow-wrap: normal;
     word-break: normal;
@@ -645,9 +654,10 @@ img {
     padding: 2px 6px;
     border: 1px solid var(--rule);
     color: var(--muted);
+    font-family: var(--font-sans);
     font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-weight: 800;
+    letter-spacing: 0.05em;
     line-height: 1.2;
     text-transform: uppercase;
 }
@@ -771,15 +781,18 @@ img {
 
 .timeline-card-title {
     display: block;
-    font-size: 12px;
-    font-weight: 500;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .timeline-card-date {
     display: block;
     margin-top: 2px;
     color: var(--muted);
+    font-family: var(--font-sans);
     font-size: 11px;
+    font-weight: 600;
 }
 
 .projects-grid {
@@ -840,8 +853,10 @@ img {
     padding: 2px 5px;
     border: 1px solid var(--muted);
     color: var(--muted);
+    font-family: var(--font-sans);
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 800;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
 }
 
@@ -875,10 +890,10 @@ img {
     border: 1px solid var(--rule);
     background: var(--surface);
     color: var(--muted);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
 }
 
 .project-description {
@@ -904,10 +919,10 @@ img {
     padding: 0 12px;
     border: 1px solid var(--signal);
     color: var(--signal);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-weight: 800;
+    letter-spacing: 0.05em;
     text-decoration: none;
     text-transform: uppercase;
     transition: background-color 160ms ease, color 160ms ease;
@@ -933,10 +948,10 @@ img {
     border: 1px solid var(--rule);
     background: var(--surface);
     color: var(--ink);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
+    font-weight: 800;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
 }
@@ -1009,7 +1024,9 @@ img {
     padding: 9px 0;
     border-bottom: 1px solid var(--soft-rule);
     color: var(--muted);
-    font-size: 12px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .setup-item:last-child {
@@ -1040,7 +1057,9 @@ img {
 
 .footer p {
     color: var(--muted);
+    font-family: var(--font-sans);
     font-size: 11px;
+    font-weight: 600;
 }
 
 .footer a {
