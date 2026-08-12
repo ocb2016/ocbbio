@@ -37,6 +37,16 @@
         { selector: ".setup-section", key: "setup" }
     ];
 
+    /** Anchor href → cube section key (nav / CTA jumps) */
+    const HASH_TO_KEY = {
+        top: "hero",
+        hero: "hero",
+        skills: "skills",
+        timeline: "timeline",
+        projects: "projects",
+        setup: "setup"
+    };
+
     const rail = document.getElementById("cubeRail");
     const cssFlipper = document.getElementById("cube3dFlipper");
     const cubeHit = document.getElementById("cubeHit");
@@ -50,6 +60,13 @@
     let clickCount = 0;
     let clickResetTimer = null;
     let sectionTargets = [];
+    /**
+     * While set, resolveActiveKey() sticks to this section so smooth-scroll
+     * through intermediate blocks doesn't multi-flip the cube (nav / CTA only).
+     */
+    let jumpLockKey = null;
+    let jumpUnlockTimer = null;
+    let jumpScrollIdleTimer = null;
 
     function waitTransition(el) {
         return new Promise((resolve) => {
@@ -80,8 +97,12 @@
         });
     }
 
-    /** Single source of truth: which section the viewport is on right now */
+    /** Viewport section — or locked target during nav/CTA smooth-scroll. */
     function resolveActiveKey() {
+        if (jumpLockKey && CUBE_MAP[jumpLockKey]) {
+            return jumpLockKey;
+        }
+
         if (!sectionTargets.length) return "hero";
 
         const doc = document.documentElement;
@@ -112,6 +133,66 @@
             }
         }
         return bestKey;
+    }
+
+    function clearJumpLock() {
+        if (!jumpLockKey) return;
+        jumpLockKey = null;
+        window.clearTimeout(jumpUnlockTimer);
+        window.clearTimeout(jumpScrollIdleTimer);
+        jumpUnlockTimer = null;
+        jumpScrollIdleTimer = null;
+        // Align to real viewport section without an extra flip if already correct
+        syncCube({ animate: true });
+    }
+
+    /**
+     * Nav / in-page buttons: one flip to destination, ignore sections passed during scroll.
+     */
+    function beginNavJump(sectionKey) {
+        if (!CUBE_MAP[sectionKey]) return;
+
+        window.clearTimeout(jumpUnlockTimer);
+        window.clearTimeout(jumpScrollIdleTimer);
+        jumpLockKey = sectionKey;
+
+        // One flip straight to target (intermediates ignored while lock is held)
+        syncCube({ animate: true });
+
+        // Unlock after smooth-scroll settles (or safety timeout)
+        const onScroll = () => {
+            window.clearTimeout(jumpScrollIdleTimer);
+            jumpScrollIdleTimer = window.setTimeout(() => {
+                window.removeEventListener("scroll", onScroll);
+                clearJumpLock();
+            }, 160);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        // If already at destination (no scroll), unlock shortly after flip
+        jumpScrollIdleTimer = window.setTimeout(() => {
+            window.removeEventListener("scroll", onScroll);
+            clearJumpLock();
+        }, 160);
+        jumpUnlockTimer = window.setTimeout(() => {
+            window.removeEventListener("scroll", onScroll);
+            clearJumpLock();
+        }, 2500);
+    }
+
+    function initNavJumpLinks() {
+        document.addEventListener("click", (event) => {
+            const link = event.target.closest('a[href^="#"]');
+            if (!link) return;
+
+            const raw = (link.getAttribute("href") || "").trim();
+            if (raw === "#" || raw === "") return;
+
+            const id = decodeURIComponent(raw.slice(1));
+            const key = HASH_TO_KEY[id];
+            if (!key) return;
+
+            beginNavJump(key);
+        }, true);
     }
 
     async function flipToLetters(letters) {
@@ -280,4 +361,5 @@
 
     (cubeHit || cssFlipper).addEventListener("click", onCubeClick);
     initSectionTracking();
+    initNavJumpLinks();
 })();
