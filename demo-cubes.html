@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ocb · cube demos</title>
+    <meta name="theme-color" content="#0b0c0a">
+    <link rel="icon" type="image/svg+xml" href="icons/ocb_site_logo.svg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cube.css">
+    <style>
+        .demo-banner {
+            position: relative;
+            z-index: 3;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--rule);
+            background: var(--surface);
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .demo-banner a {
+            color: var(--ink);
+            text-decoration-color: var(--signal);
+            text-underline-offset: 3px;
+        }
+
+        .demo-banner strong {
+            color: var(--signal);
+        }
+
+        .demo-hint {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* Extra breathing room so sticky + observer are easy to test */
+        .demo-pad {
+            min-height: 28vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">
+        <strong>Cube demo</strong> — scroll between Hero and Skills, switch mode top-center.
+        <div class="demo-hint">
+            SVG swap uses your exported cubes · CSS 3D is a real <code>preserve-3d</code> mesh ·
+            <a href="index.html">full site →</a>
+        </div>
+    </div>
+
+    <div class="cube-mode-toggle" role="group" aria-label="Cube animation mode">
+        <button type="button" data-cube-mode="css3d" class="is-active">CSS 3D</button>
+        <button type="button" data-cube-mode="svg">SVG swap</button>
+    </div>
+
+    <aside class="cube-rail" id="cubeRail" aria-hidden="true">
+        <div class="cube-slot">
+            <div class="cube-svg-wrap" id="cubeSvgWrap" hidden>
+                <div class="cube-svg-stage" id="cubeSvgStage">
+                    <img id="cubeSvgImg" src="icons/ocb_site_logo.svg" alt="" width="264" height="308" decoding="async">
+                </div>
+            </div>
+
+            <div class="cube-3d-wrap" id="cube3dWrap">
+                <div class="cube-3d-iso">
+                    <div class="cube-3d-flipper" id="cube3dFlipper">
+                        <div class="cube-face" data-face="front">B</div>
+                        <div class="cube-face" data-face="back">O</div>
+                        <div class="cube-face" data-face="right">B</div>
+                        <div class="cube-face" data-face="left">O</div>
+                        <div class="cube-face" data-face="top">C</div>
+                        <div class="cube-face" data-face="bottom">C</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </aside>
+
+    <div class="container">
+        <header class="hero">
+            <div class="discord-card physics-element" id="discordCard" style="pointer-events:none">
+                <div class="dc-left">
+                    <div class="dc-avatar-wrap">
+                        <img src="img/zayac.png" alt="" class="dc-avatar">
+                        <span class="dc-status-dot online"></span>
+                    </div>
+                </div>
+                <div class="dc-info">
+                    <span class="dc-username">ocbxvi</span>
+                </div>
+            </div>
+
+            <h1 class="title physics-element">ocb</h1>
+            <p class="tagline physics-element">hero section · cube should read <strong style="color:var(--ink)">O C B</strong></p>
+            <div class="socials physics-element">
+                <span class="social-btn" aria-hidden="true"><img src="icons/telegram.svg" alt=""></span>
+                <span class="social-btn" aria-hidden="true"><img src="icons/discord.svg" alt=""></span>
+                <span class="social-btn" aria-hidden="true"><img src="icons/steam.svg" alt=""></span>
+                <span class="social-btn" aria-hidden="true"><img src="icons/soundcloud.svg" alt=""></span>
+            </div>
+            <div class="demo-pad"></div>
+        </header>
+
+        <section class="skills-section">
+            <h2 class="section-title physics-element">Skills</h2>
+            <p class="tagline physics-element" style="margin-bottom:28px">
+                skills section · cube should flip to <strong style="color:var(--ink)">S K L</strong>
+            </p>
+            <div class="skills-grid">
+                <div class="skill-category is-visible">
+                    <h3 class="category-title">Programming</h3>
+                    <div class="skill-cards">
+                        <div class="skill-card"><div class="skill-icon-wrap"><img src="icons/python.svg" class="skill-svg" alt=""></div><span class="skill-name">Python</span><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+                        <div class="skill-card"><div class="skill-icon-wrap"><img src="icons/typescript.svg" class="skill-svg" alt=""></div><span class="skill-name">TypeScript</span><div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div></div>
+                    </div>
+                </div>
+                <div class="skill-category is-visible">
+                    <h3 class="category-title">3D Art</h3>
+                    <div class="skill-cards">
+                        <div class="skill-card"><div class="skill-icon-wrap"><img src="icons/blender.svg" class="skill-svg" alt=""></div><span class="skill-name">Blender</span><div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div></div>
+                        <div class="skill-card"><div class="skill-icon-wrap"><img src="icons/zbrush.svg" class="skill-svg" alt=""></div><span class="skill-name">zBrush</span><div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div></div>
+                    </div>
+                </div>
+                <div class="skill-category is-visible">
+                    <h3 class="category-title">Game Engines</h3>
+                    <div class="skill-cards">
+                        <div class="skill-card"><div class="skill-icon-wrap"><img src="icons/unity.svg" class="skill-svg" alt=""></div><span class="skill-name">Unity</span><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+                        <div class="skill-card"><div class="skill-icon-wrap"><img src="icons/ue.svg" class="skill-svg" alt=""></div><span class="skill-name">UE5</span><div class="skill-bar"><div class="skill-fill" style="width:20%"></div></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="demo-pad"></div>
+        </section>
+
+        <section class="timeline-section">
+            <h2 class="section-title">Timeline</h2>
+            <p class="tagline" style="margin-bottom:24px">cube → <strong style="color:var(--ink)">T M L</strong></p>
+            <div class="demo-pad"></div>
+        </section>
+
+        <section class="projects-section">
+            <h2 class="section-title">Projects</h2>
+            <p class="tagline" style="margin-bottom:24px">cube → <strong style="color:var(--ink)">P R J</strong></p>
+            <div class="demo-pad"></div>
+        </section>
+
+        <section class="setup-section">
+            <h2 class="section-title">Setup</h2>
+            <p class="tagline" style="margin-bottom:24px">cube → <strong style="color:var(--ink)">S T P</strong></p>
+            <div class="demo-pad"></div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-line"></div>
+            <p>cube prototype · ocb</p>
+        </footer>
+    </div>
+
+    <script src="cube.js"></script>
+</body>
+</html>

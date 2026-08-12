@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800;900&family=Unbounded:wght@600;700;800&display=swap");
 
 :root {
     --black: #0b0c0a;
@@ -8,9 +8,13 @@
     --muted: #9aa095;
     --rule: #30352d;
     --soft-rule: #20241e;
-    --signal: #ff3b30;
+    /* Main brand = logo red */
+    --signal: #ec0000;
     --danger: #ff5f56;
-    --font: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    --font-sans: "Montserrat", system-ui, sans-serif;
+    --font-display: "Unbounded", "Montserrat", system-ui, sans-serif;
+    --font: var(--font-mono);
 }
 
 *,
@@ -24,17 +28,28 @@
 html {
     overflow-x: hidden;
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
+    position: relative;
     min-width: 320px;
     overflow-x: hidden;
-    background: var(--black);
+    /* Flat depth: pure material shift, no floating red orbs */
+    background:
+        linear-gradient(180deg, #0d0e0c 0%, var(--black) 240px, #0a0b09 100%);
     color: var(--ink);
-    font-family: var(--font);
+    font-family: var(--font-mono);
     font-size: 15px;
     font-variant-numeric: tabular-nums;
     line-height: 1.5;
+}
+
+/* Static grain baked into page chrome only — never over interactive UI
+   (overlay grain re-composited every hover and flashed red text). */
+.grain {
+    display: none;
 }
 
 button,
@@ -53,9 +68,14 @@ img {
 }
 
 .container {
+    position: relative;
+    z-index: 2;
     width: min(1240px, calc(100% - 48px));
     margin: 0 auto;
     border-inline: 1px solid var(--rule);
+    /* Must be fully opaque — transparent bg + grain made every red title
+       re-composite (look brighter) on any tile hover/leave */
+    background: var(--black);
 }
 
 .hero,
@@ -74,10 +94,11 @@ img {
     grid-template-areas:
         "name profile"
         "role profile"
+        "actions profile"
         "social profile";
     column-gap: clamp(48px, 8vw, 144px);
-    min-height: min(640px, 92vh);
-    padding: 64px 68px;
+    min-height: min(680px, 94vh);
+    padding: 72px 68px 80px;
     align-content: center;
 }
 
@@ -93,18 +114,69 @@ img {
 
 .title {
     grid-area: name;
+    font-family: var(--font-display);
     font-size: clamp(76px, 8vw, 118px);
-    font-weight: 700;
-    letter-spacing: 0;
+    font-weight: 800;
+    letter-spacing: -0.03em;
     line-height: 0.9;
 }
 
 .tagline {
     grid-area: role;
-    max-width: 36ch;
-    margin-top: 28px;
+    max-width: 40ch;
+    margin-top: 22px;
     color: var(--muted);
+    font-family: var(--font-sans);
     font-size: 15px;
+    font-weight: 600;
+}
+
+.hero-actions {
+    grid-area: actions;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1px solid var(--signal);
+    background: var(--signal);
+    color: var(--black);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.hero-cta:hover,
+.hero-cta:focus-visible {
+    outline: 0;
+    /* Solid paints only — no transparent bg / translate (they flash other red text) */
+    background: #ff1a1a;
+    border-color: #ff1a1a;
+    color: var(--black);
+}
+
+.hero-cta.ghost {
+    border-color: var(--rule);
+    background: var(--surface);
+    color: var(--ink);
+}
+
+.hero-cta.ghost:hover,
+.hero-cta.ghost:focus-visible {
+    border-color: var(--signal);
+    background: var(--surface-raised);
+    color: var(--signal);
 }
 
 .separator {
@@ -115,7 +187,8 @@ img {
 .socials {
     grid-area: social;
     display: flex;
-    margin-top: 64px;
+    flex-wrap: wrap;
+    margin-top: 36px;
 }
 
 .social-btn {
@@ -126,9 +199,9 @@ img {
     place-items: center;
     border: 1px solid var(--rule);
     border-right: 0;
-    background: transparent;
+    background: var(--black);
     text-decoration: none;
-    transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+    transition: background-color 180ms ease, border-color 180ms ease;
 }
 
 .social-btn:last-child {
@@ -143,11 +216,14 @@ img {
     background: var(--surface-raised);
     color: var(--muted);
     content: attr(data-tooltip);
+    font-family: var(--font-sans);
     font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
     opacity: 0;
     pointer-events: none;
-    transform: translate(-50%, -3px);
-    transition: opacity 180ms ease, transform 180ms ease;
+    transform: translate(-50%, 0);
+    transition: opacity 180ms ease;
 }
 
 .social-btn:hover,
@@ -155,13 +231,11 @@ img {
     outline: 0;
     border-color: var(--signal);
     background: var(--signal);
-    transform: translateY(-3px);
 }
 
 .social-btn:hover::after,
 .social-btn:focus-visible::after {
     opacity: 1;
-    transform: translate(-50%, 0);
 }
 
 .social-btn img {
@@ -169,7 +243,6 @@ img {
     height: 20px;
     filter: grayscale(1) brightness(0) invert(1);
     opacity: 0.82;
-    transition: filter 180ms ease, opacity 180ms ease;
 }
 
 .social-btn:hover img,
@@ -191,12 +264,11 @@ img {
     padding: 6px 0 6px 14px;
     border-left: 2px solid var(--signal);
     cursor: pointer;
-    transition: border-color 180ms ease, transform 180ms ease;
+    transition: border-color 180ms ease;
 }
 
 .discord-card:hover {
     border-left-color: var(--ink);
-    transform: translateX(4px);
 }
 
 .dc-badge {
@@ -300,7 +372,7 @@ img {
 
 .copy-toast {
     position: fixed;
-    z-index: 10;
+    z-index: 20;
     bottom: 24px;
     left: 24px;
     padding: 10px 14px;
@@ -319,11 +391,21 @@ img {
     transform: translateY(0);
 }
 
-.skills-section,
-.timeline-section,
-.projects-section,
+/* Varied vertical air so the page doesn't feel like one flat slab */
+.skills-section {
+    padding: 72px 68px 80px;
+}
+
+.timeline-section {
+    padding: 96px 68px 104px;
+}
+
+.projects-section {
+    padding: 108px 68px 96px;
+}
+
 .setup-section {
-    padding: 88px 68px;
+    padding: 80px 68px 120px;
 }
 
 .section-title {
@@ -331,8 +413,10 @@ img {
     align-items: center;
     gap: 24px;
     margin-bottom: 38px;
+    font-family: var(--font-display);
     font-size: clamp(28px, 3.4vw, 44px);
     font-weight: 700;
+    letter-spacing: -0.02em;
     line-height: 1;
 }
 
@@ -355,13 +439,7 @@ img {
     border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
     background: var(--surface);
-    transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
-}
-
-.skill-category:hover {
-    border-color: var(--signal);
-    background: var(--surface-raised);
-    transform: translateY(-3px);
+    contain: paint;
 }
 
 .category-title,
@@ -371,6 +449,9 @@ img {
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
+    /* Keep title on a stable paint layer — avoid AA fringe flash on neighbor hover */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
 }
 
 .skill-cards {
@@ -378,6 +459,8 @@ img {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     border-top: 1px solid var(--soft-rule);
     border-left: 1px solid var(--soft-rule);
+    /* Clip tile paints so hover doesn't dirty siblings/titles */
+    contain: paint;
 }
 
 .skill-card {
@@ -389,11 +472,13 @@ img {
     padding: 10px;
     border-right: 1px solid var(--soft-rule);
     border-bottom: 1px solid var(--soft-rule);
-    transition: background-color 180ms ease;
+    background: transparent;
+    /* No transition — transitioning translucent fills forces wide repaints */
 }
 
 .skill-card:hover {
-    background: color-mix(in srgb, var(--signal) 8%, transparent);
+    /* Solid color, no alpha color-mix (alpha was re-compositing red titles site-wide) */
+    background: #1c1814;
 }
 
 .skill-icon-wrap {
@@ -407,12 +492,11 @@ img {
     width: 19px;
     height: 19px;
     opacity: 0.82;
-    transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .skill-card:hover .skill-svg {
     opacity: 1;
-    transform: scale(1.06);
+    /* no transform:scale — promotes layers and flashes neighbor text */
 }
 
 .skill-name {
@@ -468,21 +552,37 @@ img {
     display: grid;
     grid-template-columns: 168px minmax(0, 1fr);
     border-top: 1px solid var(--rule);
+    align-items: stretch;
+    /* solid hover only — no alpha/glow */
+    transition: background-color 160ms ease;
+}
+
+.timeline-group:hover {
+    background: #141612;
 }
 
 .timeline-year {
     display: flex;
     align-items: flex-start;
-    padding: 22px 32px 20px 24px;
+    padding: 16px 24px 16px 20px;
     border-right: 1px solid var(--rule);
     color: var(--signal);
-    font-size: clamp(34px, 4vw, 54px);
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.2vw, 40px);
     font-weight: 700;
-    line-height: 0.9;
+    line-height: 1;
+    opacity: 0.78;
+    transition: opacity 160ms ease;
+}
+
+.timeline-group:hover .timeline-year {
+    opacity: 1;
 }
 
 .timeline-events {
     min-width: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .timeline-item {
@@ -499,13 +599,12 @@ img {
     grid-template-columns: 28px minmax(0, 1fr) auto;
     gap: 14px;
     align-items: center;
-    min-height: 54px;
-    padding: 10px 0;
-    transition: padding-left 180ms ease;
+    min-height: 52px;
+    padding: 12px 0;
 }
 
-.timeline-item:hover .timeline-card {
-    padding-left: 8px;
+.timeline-item:hover .timeline-card-title {
+    color: var(--ink);
 }
 
 .timeline-card-icon,
@@ -547,12 +646,11 @@ img {
     min-width: 0;
     border-bottom: 1px solid var(--rule);
     background: var(--black);
-    transition: background-color 220ms ease, transform 220ms ease;
+    transition: background-color 180ms ease;
 }
 
 .project-card:hover {
     background: var(--surface);
-    transform: translateX(8px);
 }
 
 .project-preview {
@@ -583,8 +681,9 @@ img {
 .project-name {
     min-width: 0;
     align-self: end;
+    font-family: var(--font-sans);
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 800;
     overflow-wrap: anywhere;
 }
 
@@ -636,7 +735,9 @@ img {
 .project-description {
     max-width: 84ch;
     color: var(--muted);
-    font-size: 12px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
     line-height: 1.7;
 }
 
@@ -663,12 +764,12 @@ img {
     border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
     background: var(--surface);
-    transition: border-color 180ms ease, transform 180ms ease;
+    transition: border-color 180ms ease, background-color 180ms ease;
 }
 
 .setup-column:hover {
     border-color: var(--signal);
-    transform: translateY(-3px);
+    background: var(--surface-raised);
 }
 
 .setup-list {
@@ -686,12 +787,20 @@ img {
     border-bottom: 0;
 }
 
+/* Room to scroll the last section into the "reading band" so Setup can activate */
+.setup-section {
+    min-height: min(72vh, 640px);
+    padding-bottom: 120px;
+}
+
 .footer {
     display: flex;
     min-height: 96px;
     align-items: center;
     justify-content: space-between;
     padding: 24px 68px;
+    /* Extra scroll runway past the last content block */
+    margin-bottom: 18vh;
 }
 
 .footer-line {
@@ -709,7 +818,7 @@ img {
     position: fixed;
     right: 24px;
     bottom: 24px;
-    z-index: 5;
+    z-index: 20;
     display: grid;
     width: 44px;
     height: 44px;
@@ -719,14 +828,12 @@ img {
     color: var(--ink);
     opacity: 0;
     pointer-events: none;
-    transform: translateY(8px);
-    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, opacity 180ms ease, transform 180ms ease;
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, opacity 180ms ease;
 }
 
 .scroll-top.visible {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0);
 }
 
 .scroll-top:hover,
@@ -773,34 +880,50 @@ img {
 
 @media (max-width: 920px) {
     .hero {
-        grid-template-columns: minmax(0, 1fr) minmax(250px, 0.5fr);
-        padding: 52px;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.45fr);
+        column-gap: 32px;
+        padding: 48px 40px;
+        min-height: 0;
     }
 
     .hero::before {
-        right: 52px;
-        left: 52px;
+        right: 40px;
+        left: 40px;
     }
 
     .skills-section,
     .timeline-section,
     .projects-section,
     .setup-section {
-        padding-inline: 52px;
+        padding-inline: 40px;
     }
 
     .skills-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .timeline-group {
+        grid-template-columns: 100px minmax(0, 1fr);
+    }
+
+    .timeline-year {
+        padding: 14px 12px;
+        font-size: clamp(22px, 4vw, 28px);
+    }
+
+    .timeline-item {
+        padding: 0 16px;
+    }
+
     .footer {
-        padding-inline: 52px;
+        padding-inline: 40px;
     }
 }
 
 @media (max-width: 700px) {
     .container {
-        width: min(100% - 24px, 620px);
+        width: calc(100% - 16px);
+        max-width: none;
     }
 
     .hero {
@@ -808,73 +931,133 @@ img {
         grid-template-areas:
             "name"
             "role"
+            "actions"
             "profile"
             "social";
         min-height: 0;
-        padding: 70px 24px 30px;
+        padding: 56px 18px 28px;
+        row-gap: 0;
     }
 
     .hero::before {
-        top: 24px;
-        right: 24px;
-        left: 24px;
+        top: 20px;
+        right: 18px;
+        left: 18px;
     }
 
     .title {
-        font-size: clamp(54px, 16vw, 86px);
+        font-size: clamp(52px, 18vw, 72px);
+        letter-spacing: -0.04em;
     }
 
     .tagline {
+        margin-top: 14px;
+        font-size: 13px;
+        max-width: none;
+    }
+
+    .hero-actions {
         margin-top: 20px;
-        font-size: 12px;
+        gap: 8px;
+    }
+
+    .hero-cta {
+        min-height: 42px;
+        padding: 0 14px;
+        font-size: 11px;
     }
 
     .discord-card {
-        margin-top: 52px;
+        margin-top: 28px;
+        width: 100%;
+        min-width: 0;
     }
 
     .socials {
-        margin-top: 32px;
+        margin-top: 24px;
+        width: 100%;
     }
 
-    .skills-section,
-    .timeline-section,
-    .projects-section,
+    .social-btn {
+        flex: 1;
+        width: auto;
+        min-width: 0;
+        height: 48px;
+    }
+
+    .social-btn::after {
+        display: none; /* tooltips clash on touch */
+    }
+
+    .skills-section {
+        padding: 48px 18px 40px;
+    }
+
+    .timeline-section {
+        padding: 56px 18px 48px;
+    }
+
+    .projects-section {
+        padding: 56px 18px 48px;
+    }
+
     .setup-section {
-        padding: 58px 24px;
+        padding: 48px 18px 64px;
+        min-height: 0;
+        margin-bottom: 8vh;
     }
 
     .section-title {
-        gap: 14px;
-        margin-bottom: 26px;
-        font-size: 30px;
+        gap: 12px;
+        margin-bottom: 22px;
+        font-size: clamp(26px, 8vw, 32px);
     }
 
     .skills-grid,
     .setup-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
     }
 
     .skill-category {
-        padding: 16px;
+        padding: 14px;
     }
 
+    .skill-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .skill-name {
+        font-size: 11px;
+    }
+
+    /* Stack year above events — side-by-side overflows Unbounded digits */
     .timeline-group {
-        grid-template-columns: 76px minmax(0, 1fr);
+        grid-template-columns: 1fr;
     }
 
     .timeline-year {
-        padding: 17px 12px;
-        font-size: 27px;
+        padding: 12px 14px 10px;
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+        font-size: 22px;
+        opacity: 1;
+        letter-spacing: -0.02em;
+    }
+
+    .timeline-group:hover {
+        background: transparent; /* less sticky hover on touch */
     }
 
     .timeline-item {
-        padding: 0 13px;
+        padding: 0 14px;
     }
 
     .timeline-card {
-        grid-template-columns: 24px minmax(0, 1fr);
-        gap: 8px;
+        grid-template-columns: 22px minmax(0, 1fr);
+        gap: 10px;
+        min-height: 48px;
+        padding: 10px 0;
     }
 
     .timeline-card-icon,
@@ -884,7 +1067,9 @@ img {
     }
 
     .timeline-card-title {
-        font-size: 11px;
+        font-size: 12px;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
     }
 
     .timeline-card-date {
@@ -895,27 +1080,35 @@ img {
         grid-template-columns: 1fr;
     }
 
-    .project-card:hover {
-        transform: none;
-    }
-
     .project-preview {
-        padding: 18px;
+        padding: 16px;
         border-right: 0;
         border-bottom: 1px solid var(--rule);
+        grid-template-columns: 36px minmax(0, 1fr);
+    }
+
+    .project-icon-wrap {
+        width: 36px;
+        height: 36px;
+    }
+
+    .project-name {
+        font-size: 16px;
     }
 
     .project-details {
-        padding: 18px;
+        padding: 16px;
     }
 
     .project-description {
-        font-size: 11px;
+        font-size: 12px;
+        line-height: 1.65;
     }
 
     .footer {
-        min-height: 76px;
-        padding: 18px 24px;
+        min-height: 72px;
+        padding: 16px 18px;
+        margin-bottom: 0;
     }
 
     .copy-toast {
@@ -928,6 +1121,26 @@ img {
     .scroll-top {
         right: 12px;
         bottom: 12px;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+    .skill-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-cta {
+        width: 100%;
+    }
+
+    .timeline-year {
+        font-size: 20px;
     }
 }
 

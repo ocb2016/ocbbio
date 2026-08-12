@@ -1,0 +1,187 @@
+/* ===== Section cube rail ===== */
+
+.cube-rail {
+    --cube-size: 138px;
+    --face-size: 126px;
+    --cube-half: calc(var(--cube-size) / 2);
+    --face-inset: calc((var(--cube-size) - var(--face-size)) / 2);
+    --logo-red: #ec0000;
+
+    position: fixed;
+    z-index: 6;
+    top: clamp(96px, 16vh, 168px);
+    /* left is set in JS from .container gutter — avoids overlap on zoom */
+    left: 8px;
+    width: 196px;
+    height: 228px;
+    pointer-events: none;
+    overflow: visible;
+}
+
+/* Not enough space left of content (narrow / zoom) */
+.cube-rail.is-collapsed {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.cube-rail .cube-slot {
+    position: relative;
+    width: 196px;
+    height: 228px;
+    overflow: visible;
+}
+
+.cube-rail.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease, visibility 200ms ease;
+}
+
+.cube-rail:not(.is-hidden) {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 220ms ease;
+}
+
+/* Invisible hit target on top of the cube */
+.cube-hit {
+    position: absolute;
+    z-index: 3;
+    inset: 18% 22% 22%;
+    cursor: pointer;
+    pointer-events: auto;
+    background: transparent;
+    border: 0;
+    padding: 0;
+}
+
+.cube-hit:focus-visible {
+    outline: 1px solid var(--signal);
+    outline-offset: 4px;
+}
+
+/* ===== CSS 3D cube ===== */
+
+.cube-3d-wrap {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    perspective: 820px;
+    perspective-origin: 50% 45%;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.cube-3d-iso {
+    width: var(--cube-size);
+    height: var(--cube-size);
+    transform: rotateX(-30deg) rotateY(40deg);
+    transform-style: preserve-3d;
+}
+
+.cube-3d-flipper {
+    position: relative;
+    width: var(--cube-size);
+    height: var(--cube-size);
+    transform-style: preserve-3d;
+    transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.cube-3d-flipper.is-exit {
+    transition-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+    transform: rotateX(90deg);
+}
+
+.cube-3d-flipper.is-enter-prep {
+    transition: none;
+    transform: rotateX(-90deg);
+}
+
+.cube-3d-flipper.is-enter {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: rotateX(0deg);
+}
+
+.cube-face {
+    position: absolute;
+    top: var(--face-inset);
+    left: var(--face-inset);
+    width: var(--face-size);
+    height: var(--face-size);
+    display: grid;
+    place-items: center;
+    backface-visibility: hidden;
+    background: var(--logo-red);
+    color: #fff;
+    font-family: "Montserrat", system-ui, sans-serif;
+    font-size: 78px;
+    font-weight: 900;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    user-select: none;
+    box-shadow: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+.cube-face[data-face="front"] {
+    transform: rotateY(0deg) translateZ(var(--cube-half));
+}
+
+.cube-face[data-face="back"] {
+    transform: rotateY(180deg) translateZ(var(--cube-half));
+}
+
+.cube-face[data-face="right"] {
+    transform: rotateY(90deg) translateZ(var(--cube-half));
+}
+
+.cube-face[data-face="left"] {
+    transform: rotateY(-90deg) translateZ(var(--cube-half));
+}
+
+.cube-face[data-face="top"] {
+    transform: rotateX(90deg) translateZ(var(--cube-half));
+}
+
+.cube-face[data-face="bottom"] {
+    transform: rotateX(-90deg) translateZ(var(--cube-half));
+}
+
+.cube-3d-iso::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 88px;
+    height: 18px;
+    margin-top: 26px;
+    background: radial-gradient(ellipse, rgba(0, 0, 0, 0.4) 0%, transparent 72%);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+@media (max-width: 1100px) {
+    .cube-rail {
+        display: none;
+    }
+}
+
+/* Extra-safe: hide on short viewports / heavy zoom */
+@media (max-width: 1280px), (max-height: 560px) {
+    .cube-rail {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cube-3d-flipper {
+        transition-duration: 1ms !important;
+    }
+}

@@ -197,12 +197,30 @@ function groupTimelineByYear() {
 
 groupTimelineByYear();
 
+/** Active projects first, then paused, then closed — keeps the list scannable. */
+function sortProjectsByStatus() {
+    const grid = document.querySelector(".projects-grid");
+    if (!grid) return;
+
+    const rank = (card) => {
+        if (card.classList.contains("active")) return 0;
+        if (card.classList.contains("paused")) return 1;
+        return 2; // closed / anything else
+    };
+
+    [...grid.children]
+        .sort((a, b) => rank(a) - rank(b))
+        .forEach((card) => grid.append(card));
+}
+
+sortProjectsByStatus();
+
 const revealTargets = [
     ...document.querySelectorAll(".physics-element, .skill-category, .project-card, .setup-grid")
 ];
 
-function revealTarget(target, index) {
-    target.style.setProperty("--reveal-delay", `${Math.min(index % 7, 6) * 55}ms`);
+function paintReveal(target, delayMs) {
+    target.style.setProperty("--reveal-delay", `${delayMs}ms`);
     target.classList.add("is-visible");
 
     if (target.classList.contains("skill-category")) {
@@ -210,9 +228,55 @@ function revealTarget(target, index) {
             target.querySelectorAll(".skill-fill").forEach((fill) => {
                 fill.style.width = `${fill.dataset.level}%`;
             });
-        }, 120);
+        }, 120 + delayMs);
     }
 }
+
+/**
+ * IntersectionObserver delivers entries in arbitrary order. Batch them per frame,
+ * sort by real DOM order, then stagger — so later cards never animate before earlier ones.
+ */
+function createRevealController() {
+    const pending = new Set();
+    let flushScheduled = false;
+
+    const byDocumentOrder = (a, b) => {
+        if (a === b) return 0;
+        const pos = a.compareDocumentPosition(b);
+        if (pos & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+        if (pos & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+        return 0;
+    };
+
+    const flush = () => {
+        flushScheduled = false;
+        const batch = [...pending].sort(byDocumentOrder);
+        pending.clear();
+
+        batch.forEach((target, i) => {
+            // Sequential within the wave; soft cap so huge batches don't lag forever
+            const delayMs = Math.min(i, 8) * 50;
+            paintReveal(target, delayMs);
+        });
+    };
+
+    return {
+        enqueue(target) {
+            if (target.classList.contains("is-visible")) return;
+            pending.add(target);
+            if (flushScheduled) return;
+            flushScheduled = true;
+            requestAnimationFrame(flush);
+        },
+        revealAll(targets) {
+            [...targets].sort(byDocumentOrder).forEach((target, i) => {
+                paintReveal(target, Math.min(i, 8) * 50);
+            });
+        }
+    };
+}
+
+const reveal = createRevealController();
 
 if ("IntersectionObserver" in window) {
     document.documentElement.classList.add("motion-ready");
@@ -220,14 +284,14 @@ if ("IntersectionObserver" in window) {
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-            revealTarget(entry.target, revealTargets.indexOf(entry.target));
             revealObserver.unobserve(entry.target);
+            reveal.enqueue(entry.target);
         });
-    }, { threshold: 0.12, rootMargin: "0px 0px -32px" });
+    }, { threshold: 0.08, rootMargin: "0px 0px -8% 0px" });
 
     revealTargets.forEach((target) => revealObserver.observe(target));
 } else {
-    revealTargets.forEach(revealTarget);
+    reveal.revealAll(revealTargets);
 }
 
 connectLanyard();
