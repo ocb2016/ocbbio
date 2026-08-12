@@ -159,24 +159,26 @@
         // One flip straight to target (intermediates ignored while lock is held)
         syncCube({ animate: true });
 
-        // Unlock after smooth-scroll settles (or safety timeout)
+        let sawScroll = false;
+        const unlock = () => {
+            window.removeEventListener("scroll", onScroll);
+            clearJumpLock();
+        };
         const onScroll = () => {
+            sawScroll = true;
             window.clearTimeout(jumpScrollIdleTimer);
-            jumpScrollIdleTimer = window.setTimeout(() => {
-                window.removeEventListener("scroll", onScroll);
-                clearJumpLock();
-            }, 160);
+            // Unlock only after smooth-scroll actually stops
+            jumpScrollIdleTimer = window.setTimeout(unlock, 180);
         };
         window.addEventListener("scroll", onScroll, { passive: true });
-        // If already at destination (no scroll), unlock shortly after flip
+
+        // Same-section click (no scroll): drop lock after the flip finishes
         jumpScrollIdleTimer = window.setTimeout(() => {
-            window.removeEventListener("scroll", onScroll);
-            clearJumpLock();
-        }, 160);
-        jumpUnlockTimer = window.setTimeout(() => {
-            window.removeEventListener("scroll", onScroll);
-            clearJumpLock();
-        }, 2500);
+            if (!sawScroll) unlock();
+        }, 700);
+
+        // Hard cap so a stuck lock can't freeze tracking forever
+        jumpUnlockTimer = window.setTimeout(unlock, 2800);
     }
 
     function initNavJumpLinks() {
