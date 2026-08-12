@@ -26,7 +26,8 @@
 }
 
 html {
-    overflow-x: hidden;
+    /* Do NOT set overflow-x on html — with body overflow it breaks wheel scroll in Chrome
+       (page only scrolls when hovering fixed elements like the cube). */
     scroll-behavior: smooth;
     scroll-padding-top: 56px;
     -webkit-text-size-adjust: 100%;
@@ -41,8 +42,7 @@ body {
     min-width: 320px;
     min-height: 100%;
     min-height: 100dvh;
-    overflow-x: hidden;
-    overscroll-behavior-y: none;
+    overflow-x: clip;
     /* Flat depth: pure material shift, no floating red orbs.
        Base color first so overscroll / gaps stay black even if gradient fails. */
     background-color: var(--black);
@@ -53,6 +53,13 @@ body {
     font-size: 15px;
     font-variant-numeric: tabular-nums;
     line-height: 1.5;
+}
+
+/* Touch only: kill rubber-band white flash without breaking desktop wheel */
+@media (hover: none) and (pointer: coarse) {
+    body {
+        overscroll-behavior-y: none;
+    }
 }
 
 /* Static grain baked into page chrome only — never over interactive UI
