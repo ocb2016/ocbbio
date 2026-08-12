@@ -263,14 +263,20 @@
             window.visualViewport.addEventListener("scroll", onScrollOrResize, { passive: true });
         }
 
-        // Initial paint — no flip
+        // Initial paint — place first, then unhide (avoids left:fallback → real jump)
         const key = resolveActiveKey();
         if (CUBE_MAP[key]) {
             applyLetters(CUBE_MAP[key].letters);
             displayedKey = key;
-            rail.classList.remove("is-hidden");
         }
         placeCubeRail();
+
+        requestAnimationFrame(() => {
+            rail.classList.remove("is-booting");
+            if (CUBE_MAP[key] && !rail.classList.contains("is-collapsed")) {
+                rail.classList.remove("is-hidden");
+            }
+        });
     }
 
     (cubeHit || cssFlipper).addEventListener("click", onCubeClick);

@@ -10,12 +10,20 @@
     position: fixed;
     z-index: 6;
     top: clamp(96px, 16vh, 168px);
-    /* left is set in JS from .container gutter — avoids overlap on zoom */
-    left: 8px;
+    /* Approximate gutter until JS measures .container — reduces jump if boot flash slips */
+    left: max(8px, calc((100vw - min(1240px, 100vw - 48px)) / 2 - 196px - 28px));
     width: 196px;
     height: 228px;
     pointer-events: none;
     overflow: visible;
+}
+
+/* Hidden until placeCubeRail() sets the real left — no transition so no jump-fade */
+.cube-rail.is-booting {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: none !important;
 }
 
 /* Not enough space left of content (narrow / zoom) */
