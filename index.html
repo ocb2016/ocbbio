@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ocb | bio</title>
-    <meta name="description" content="ocb — developer, 3D artist & creator. Portfolio & projects.">
+    <meta name="description" content="ocb — developer & 3D artist. Portfolio & projects.">
     <meta name="theme-color" content="#0b0c0a">
     <meta property="og:title" content="ocb | bio">
-    <meta property="og:description" content="developer / 3d artist / creator — portfolio & projects">
+    <meta property="og:description" content="developer / 3d artist — portfolio & projects">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://ocb2016.me/img/og-logo.png">
     <meta property="og:image:type" content="image/png">
@@ -17,14 +17,14 @@
     <meta property="og:url" content="https://ocb2016.me/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ocb | bio">
-    <meta name="twitter:description" content="developer / 3d artist / creator — portfolio & projects">
+    <meta name="twitter:description" content="developer / 3d artist — portfolio & projects">
     <meta name="twitter:image" content="https://ocb2016.me/img/og-logo.png">
     <meta name="twitter:image:alt" content="ocb logo">
     <link rel="icon" type="image/svg+xml" href="icons/ocb_site_logo.svg">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="cube.css">
 </head>
-<body>
+<body id="top">
     <div class="copy-toast" id="copyToast">Username copied.</div>
 
     <aside class="cube-rail" id="cubeRail" aria-hidden="true">
@@ -45,8 +45,25 @@
         </div>
     </aside>
 
+    <!-- Floating island — appears after hero leaves the viewport -->
+    <nav class="nav-island" id="navIsland" aria-label="Sections" aria-hidden="true">
+        <a href="#top" class="nav-island-brand">ocb</a>
+        <span class="nav-island-sep" aria-hidden="true"></span>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#timeline" class="nav-link">Timeline</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#setup" class="nav-link">Setup</a>
+    </nav>
+
     <div class="container">
-            <header class="hero">
+            <header class="hero" id="hero">
+                <nav class="hero-nav physics-element" id="heroNav" aria-label="On this page">
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#timeline" class="nav-link">Timeline</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#setup" class="nav-link">Setup</a>
+                </nav>
+
                 <div class="discord-card physics-element" id="discordCard">
                     <img class="dc-badge" src="icons/discord.svg" alt="">
                     <div class="dc-left">
@@ -59,7 +76,7 @@
                         <span class="dc-username">ocbxvi</span>
                         <span class="dc-status-text" id="dcStatusText" style="display:none">Offline</span>
                         <div class="dc-activity" id="dcActivity">
-                            <img class="dc-activity-img" id="dcActivityImg" style="display:none">
+                            <img class="dc-activity-img" id="dcActivityImg" style="display:none" alt="">
                             <div class="dc-activity-text">
                                 <span class="dc-activity-label" id="dcActivityLabel">Playing</span>
                                 <span class="dc-activity-name" id="dcActivityName"></span>
@@ -72,94 +89,95 @@
                 </div>
 
                 <h1 class="title physics-element">ocb</h1>
-                <p class="tagline physics-element">developer <span class="separator">/</span> 3d artist <span class="separator">/</span> creator</p>
+                <p class="tagline physics-element">developer <span class="separator">/</span> 3d artist</p>
 
                 <div class="hero-actions physics-element">
                     <a href="#projects" class="hero-cta">See projects</a>
-                    <a href="https://t.me/ocbxvi" target="_blank" rel="noopener" class="hero-cta ghost">Telegram</a>
+                    <a href="https://t.me/ocbxvi" target="_blank" rel="noopener noreferrer" class="hero-cta ghost">Telegram</a>
                 </div>
 
                 <div class="socials physics-element">
-                    <a href="https://t.me/ocbxvi" target="_blank" class="social-btn" aria-label="Telegram" data-tooltip="Telegram">
+                    <a href="https://t.me/ocbxvi" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Telegram" data-tooltip="Telegram">
                         <img src="icons/telegram.svg" alt="Telegram">
                     </a>
-                    <button class="social-btn" id="discordCopyBtn" aria-label="Discord" data-tooltip="Discord">
+                    <button type="button" class="social-btn" id="discordCopyBtn" aria-label="Discord" data-tooltip="Discord">
                         <img src="icons/discord.svg" alt="Discord">
                     </button>
-                    <a href="https://steamcommunity.com/id/ocb2016/" target="_blank" class="social-btn" aria-label="Steam" data-tooltip="Steam">
+                    <a href="https://steamcommunity.com/id/ocb2016/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Steam" data-tooltip="Steam">
                         <img src="icons/steam.svg" alt="Steam">
                     </a>
-                    <a href="https://soundcloud.com/ocb2016" target="_blank" class="social-btn" aria-label="SoundCloud" data-tooltip="SoundCloud">
+                    <a href="https://soundcloud.com/ocb2016" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="SoundCloud" data-tooltip="SoundCloud">
                         <img src="icons/soundcloud.svg" alt="SoundCloud">
                     </a>
                 </div>
             </header>
 
-            <section class="skills-section">
+            <section class="skills-section" id="skills">
                 <h2 class="section-title physics-element">Skills</h2>
 
                 <div class="skills-grid">
                     <div class="skill-category">
-                        <h3 class="category-title physics-element">Programming</h3>
+                        <h3 class="category-title">Programming</h3>
                         <div class="skill-cards">
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/python.svg" class="skill-svg" alt="Python"></div><span class="skill-name">Python</span><div class="skill-bar"><div class="skill-fill" data-level="75"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/java.svg" class="skill-svg" alt="Java"></div><span class="skill-name">Java</span><div class="skill-bar"><div class="skill-fill" data-level="50"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/c%23.svg" class="skill-svg" alt="C#"></div><span class="skill-name">C#</span><div class="skill-bar"><div class="skill-fill" data-level="35"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/c%2B%2B.svg" class="skill-svg" alt="C++"></div><span class="skill-name">C++</span><div class="skill-bar"><div class="skill-fill" data-level="25"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/typescript.svg" class="skill-svg" alt="TypeScript"></div><span class="skill-name">TypeScript</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/rust.svg" class="skill-svg" alt="Rust"></div><span class="skill-name">Rust</span><div class="skill-bar"><div class="skill-fill" data-level="35"></div></div></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/typescript.svg" class="skill-svg" alt=""></div><span class="skill-name">TypeScript</span></div><span class="skill-level daily">daily</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/python.svg" class="skill-svg" alt=""></div><span class="skill-name">Python</span></div><span class="skill-level daily">daily</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/java.svg" class="skill-svg" alt=""></div><span class="skill-name">Java</span></div><span class="skill-level solid">solid</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/c%23.svg" class="skill-svg" alt=""></div><span class="skill-name">C#</span></div><span class="skill-level solid">solid</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/c%2B%2B.svg" class="skill-svg" alt=""></div><span class="skill-name">C++</span></div><span class="skill-level learning">learning</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/rust.svg" class="skill-svg" alt=""></div><span class="skill-name">Rust</span></div><span class="skill-level learning">learning</span></div>
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h3 class="category-title physics-element">Game Engines</h3>
+                        <h3 class="category-title">Game Engines</h3>
                         <div class="skill-cards">
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/unity.svg" class="skill-svg" alt="Unity"></div><span class="skill-name">Unity</span><div class="skill-bar"><div class="skill-fill" data-level="90"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/ue.svg" class="skill-svg" alt="UE5"></div><span class="skill-name">Unreal Engine 5</span><div class="skill-bar"><div class="skill-fill" data-level="20"></div></div></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/unity.svg" class="skill-svg" alt=""></div><span class="skill-name">Unity</span></div><span class="skill-level solid">solid</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/godot.svg" class="skill-svg" alt=""></div><span class="skill-name">Godot</span></div><span class="skill-level solid">solid</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/ue.svg" class="skill-svg" alt=""></div><span class="skill-name">UE5</span></div><span class="skill-level learning">learning</span></div>
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h3 class="category-title physics-element">3D Art</h3>
+                        <h3 class="category-title">3D Art</h3>
                         <div class="skill-cards">
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/blender.svg" class="skill-svg" alt="Blender"></div><span class="skill-name">Blender</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/zbrush.svg" class="skill-svg" alt="zBrush"></div><span class="skill-name">zBrush</span><div class="skill-bar"><div class="skill-fill" data-level="70"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/substancepainter.svg" class="skill-svg" alt="Substance Painter"></div><span class="skill-name">Substance Painter</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/blender.svg" class="skill-svg" alt=""></div><span class="skill-name">Blender</span></div><span class="skill-level daily">daily</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/substancepainter.svg" class="skill-svg" alt=""></div><span class="skill-name">Substance</span></div><span class="skill-level solid">solid</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/zbrush.svg" class="skill-svg" alt=""></div><span class="skill-name">zBrush</span></div><span class="skill-level solid">solid</span></div>
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h3 class="category-title physics-element">Video Editing</h3>
+                        <h3 class="category-title">Video Editing</h3>
                         <div class="skill-cards">
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/pr.svg" class="skill-svg" alt="Premiere Pro"></div><span class="skill-name">Premiere Pro</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/davinci.svg" class="skill-svg" alt="DaVinci Resolve"></div><span class="skill-name">DaVinci Resolve</span><div class="skill-bar"><div class="skill-fill" data-level="75"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/ae.svg" class="skill-svg" alt="After Effects"></div><span class="skill-name">After Effects</span><div class="skill-bar"><div class="skill-fill" data-level="30"></div></div></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/pr.svg" class="skill-svg" alt=""></div><span class="skill-name">Premiere</span></div><span class="skill-level solid">solid</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/davinci.svg" class="skill-svg" alt=""></div><span class="skill-name">DaVinci</span></div><span class="skill-level solid">solid</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/ae.svg" class="skill-svg" alt=""></div><span class="skill-name">After Effects</span></div><span class="skill-level learning">learning</span></div>
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h3 class="category-title physics-element">DevOps &amp; Tools</h3>
+                        <h3 class="category-title">DevOps &amp; Tools</h3>
                         <div class="skill-cards">
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/docker.svg" class="skill-svg" alt="Docker"></div><span class="skill-name">Docker</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/git.svg" class="skill-svg" alt="Git"></div><span class="skill-name">Git</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/linux.svg" class="skill-svg" alt="Linux"></div><span class="skill-name">Linux</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
-                            <div class="skill-card physics-element"><div class="skill-icon-wrap"><img src="icons/figma.svg" class="skill-svg" alt="Figma"></div><span class="skill-name">Figma</span><div class="skill-bar"><div class="skill-fill" data-level="100"></div></div></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/git.svg" class="skill-svg" alt=""></div><span class="skill-name">Git</span></div><span class="skill-level daily">daily</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/linux.svg" class="skill-svg" alt=""></div><span class="skill-name">Linux</span></div><span class="skill-level daily">daily</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/docker.svg" class="skill-svg" alt=""></div><span class="skill-name">Docker</span></div><span class="skill-level solid">solid</span></div>
+                            <div class="skill-card"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/figma.svg" class="skill-svg" alt=""></div><span class="skill-name">Figma</span></div><span class="skill-level solid">solid</span></div>
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h3 class="category-title physics-element">Want to Learn</h3>
+                        <h3 class="category-title">Want to Learn</h3>
                         <div class="skill-cards">
-                            <div class="skill-card physics-element future-skill"><div class="skill-icon-wrap"><img src="icons/swift.svg" class="skill-svg" alt="Swift"></div><span class="skill-name">Swift</span><div class="skill-bar"><div class="skill-fill" data-level="0"></div></div></div>
-                            <div class="skill-card physics-element future-skill"><div class="skill-icon-wrap"><img src="icons/go.svg" class="skill-svg" alt="Go"></div><span class="skill-name">Go</span><div class="skill-bar"><div class="skill-fill" data-level="0"></div></div></div>
-                            <div class="skill-card physics-element future-skill"><div class="skill-icon-wrap"><img src="icons/houdini.svg" class="skill-svg" alt="Houdini"></div><span class="skill-name">Houdini</span><div class="skill-bar"><div class="skill-fill" data-level="0"></div></div></div>
-                            <div class="skill-card physics-element future-skill"><div class="skill-icon-wrap"><img src="icons/ai.svg" class="skill-svg" alt="AI Engineering"></div><span class="skill-name">AI Engineering</span><div class="skill-bar"><div class="skill-fill" data-level="0"></div></div></div>
+                            <div class="skill-card future-skill"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/swift.svg" class="skill-svg" alt=""></div><span class="skill-name">Swift</span></div><span class="skill-level future">soon</span></div>
+                            <div class="skill-card future-skill"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/go.svg" class="skill-svg" alt=""></div><span class="skill-name">Go</span></div><span class="skill-level future">soon</span></div>
+                            <div class="skill-card future-skill"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/houdini.svg" class="skill-svg" alt=""></div><span class="skill-name">Houdini</span></div><span class="skill-level future">soon</span></div>
+                            <div class="skill-card future-skill"><div class="skill-row"><div class="skill-icon-wrap"><img src="icons/ai.svg" class="skill-svg" alt=""></div><span class="skill-name">AI Eng</span></div><span class="skill-level future">soon</span></div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="timeline-section">
+            <section class="timeline-section" id="timeline">
                 <h2 class="section-title physics-element">Timeline</h2>
                 <div class="timeline">
                     <div class="timeline-line"></div>
@@ -168,32 +186,10 @@
                     <div class="timeline-item left">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/python.svg" alt="Python"></div>
+                            <div class="timeline-card-icon"><img src="icons/python.svg" alt=""></div>
                             <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Python</span>
+                                <span class="timeline-card-title">Started programming (Python)</span>
                                 <span class="timeline-card-date">Oct 2019</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-year">2020</div>
-                    <div class="timeline-item right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/pr.svg" alt="Premiere Pro"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Premiere Pro</span>
-                                <span class="timeline-card-date">Jul 2020</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/ae.svg" alt="After Effects"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning After Effects</span>
-                                <span class="timeline-card-date">Sep 2020</span>
                             </div>
                         </div>
                     </div>
@@ -202,155 +198,29 @@
                     <div class="timeline-item right">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/blender.svg" alt="Blender"></div>
+                            <div class="timeline-card-icon"><img src="icons/blender.svg" alt=""></div>
                             <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Blender</span>
-                                <span class="timeline-card-date">Jan 2021</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/unity.svg" alt="Unity"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Unity & C#</span>
-                                <span class="timeline-card-date">Feb 2021</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/figma.svg" alt="Figma"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Figma</span>
-                                <span class="timeline-card-date">Oct 2021</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-year">2022</div>
-                    <div class="timeline-item right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/linux.svg" alt="Linux"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Linux & Git</span>
-                                <span class="timeline-card-date">Sep 2022</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/java.svg" alt="Java"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Java</span>
-                                <span class="timeline-card-date">Oct 2022</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/typescript.svg" alt="TypeScript"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning TypeScript</span>
-                                <span class="timeline-card-date">Dec 2022</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/davinci.svg" alt="DaVinci Resolve"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning DaVinci Resolve</span>
-                                <span class="timeline-card-date">Dec 2022</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-year">2023</div>
-                    <div class="timeline-item right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/zbrush.svg" alt="zBrush"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning zBrush</span>
-                                <span class="timeline-card-date">May 2023</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-year">2024</div>
-                    <div class="timeline-item left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/java.svg" alt="Java"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Returned to Java development</span>
-                                <span class="timeline-card-date">Feb 2024</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/docker.svg" alt="Docker"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Docker</span>
-                                <span class="timeline-card-date">Mar 2024</span>
+                                <span class="timeline-card-title">Moved into 3D &amp; game dev (Blender, Unity)</span>
+                                <span class="timeline-card-date">2021</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="timeline-year">2025</div>
-                    <div class="timeline-item right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/c%2B%2B.svg" alt="C++"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning C++</span>
-                                <span class="timeline-card-date">Mar 2025</span>
-                            </div>
-                        </div>
-                    </div>
                     <div class="timeline-item left">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/ue.svg" alt="UE5"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Unreal Engine 5</span>
-                                <span class="timeline-card-date">Apr 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/substancepainter.svg" alt="Substance Painter"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Substance Painter</span>
-                                <span class="timeline-card-date">May 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/raze.svg" alt="Raze"></div>
+                            <div class="timeline-card-icon"><img src="icons/raze.svg" alt=""></div>
                             <div class="timeline-card-info">
                                 <span class="timeline-card-title">Started developing Raze</span>
                                 <span class="timeline-card-date">Oct 2025</span>
                             </div>
                         </div>
                     </div>
-                    <div class="timeline-item left">
+                    <div class="timeline-item right">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/raze.svg" alt="Raze"></div>
+                            <div class="timeline-card-icon"><img src="icons/raze.svg" alt=""></div>
                             <div class="timeline-card-info">
                                 <span class="timeline-card-title">Launched Raze server</span>
                                 <span class="timeline-card-date">Dec 2025</span>
@@ -359,22 +229,22 @@
                     </div>
 
                     <div class="timeline-year">2026</div>
-                    <div class="timeline-item right">
+                    <div class="timeline-item left">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/raze.svg" alt="Raze"></div>
+                            <div class="timeline-card-icon"><img src="icons/raze.svg" alt=""></div>
                             <div class="timeline-card-info">
                                 <span class="timeline-card-title">Closed Raze server</span>
                                 <span class="timeline-card-date">Jan 2026</span>
                             </div>
                         </div>
                     </div>
-                    <div class="timeline-item left">
+                    <div class="timeline-item right">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/ecco.svg" alt="ecco"></div>
+                            <div class="timeline-card-icon"><img src="icons/ecco.svg" alt=""></div>
                             <div class="timeline-card-info">
-                                <span class="timeline-card-title">Created & closed ecco bot</span>
+                                <span class="timeline-card-title">Shipped &amp; closed ecco bot</span>
                                 <span class="timeline-card-date">Feb 2026</span>
                             </div>
                         </div>
@@ -382,9 +252,9 @@
                     <div class="timeline-item left">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/hsb.svg" alt="H.S.B"></div>
+                            <div class="timeline-card-icon"><img src="icons/hsb.svg" alt=""></div>
                             <div class="timeline-card-info">
-                                <span class="timeline-card-title">Created H.S.B bot</span>
+                                <span class="timeline-card-title">Launched H.S.B</span>
                                 <span class="timeline-card-date">Mar 2026</span>
                             </div>
                         </div>
@@ -392,7 +262,7 @@
                     <div class="timeline-item right">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/ocb_site_logo_white.svg" alt="Site"></div>
+                            <div class="timeline-card-icon"><img src="icons/ocb_site_logo_white.svg" alt=""></div>
                             <div class="timeline-card-info">
                                 <span class="timeline-card-title">Launched this website</span>
                                 <span class="timeline-card-date">Mar 2026</span>
@@ -402,19 +272,9 @@
                     <div class="timeline-item left">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/rust.svg" alt="Rust"></div>
+                            <div class="timeline-card-icon"><img src="icons/sixteencloud_logo_light.svg" alt=""></div>
                             <div class="timeline-card-info">
-                                <span class="timeline-card-title">Started learning Rust</span>
-                                <span class="timeline-card-date">Mar 2026</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/sixteencloud_logo_light.svg" alt="SixteenCloud"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Created SixteenCloud</span>
+                                <span class="timeline-card-title">Released SixteenCloud</span>
                                 <span class="timeline-card-date">Apr 2026</span>
                             </div>
                         </div>
@@ -422,7 +282,7 @@
                     <div class="timeline-item right">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/mimic_icon_white.svg" alt="MIMIC"></div>
+                            <div class="timeline-card-icon"><img src="icons/mimic_icon_white.svg" alt=""></div>
                             <div class="timeline-card-info">
                                 <span class="timeline-card-title">Started developing MIMIC</span>
                                 <span class="timeline-card-date">Apr 2026</span>
@@ -432,9 +292,9 @@
                     <div class="timeline-item left">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/haoko.svg" alt="Haoko"></div>
+                            <div class="timeline-card-icon"><img src="icons/haoko.svg" alt=""></div>
                             <div class="timeline-card-info">
-                                <span class="timeline-card-title">Created Haoko</span>
+                                <span class="timeline-card-title">Built Haoko, Bifrost &amp; Kairos</span>
                                 <span class="timeline-card-date">May 2026</span>
                             </div>
                         </div>
@@ -442,29 +302,9 @@
                     <div class="timeline-item right">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/bifrost.svg" alt="Bifrost"></div>
+                            <div class="timeline-card-icon"><img src="icons/mimic_icon_white.svg" alt=""></div>
                             <div class="timeline-card-info">
-                                <span class="timeline-card-title">Created Bifrost</span>
-                                <span class="timeline-card-date">May 2026</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/kairos.svg" alt="Kairos"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Created Kairos</span>
-                                <span class="timeline-card-date">May 2026</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card">
-                            <div class="timeline-card-icon"><img src="icons/mimic_icon_white.svg" alt="MIMIC"></div>
-                            <div class="timeline-card-info">
-                                <span class="timeline-card-title">Finished MIMIC</span>
+                                <span class="timeline-card-title">Finished &amp; handed off MIMIC</span>
                                 <span class="timeline-card-date">Jul 2026</span>
                             </div>
                         </div>
@@ -475,84 +315,26 @@
             <section class="projects-section" id="projects">
                 <h2 class="section-title physics-element">Projects</h2>
 
-                <div class="projects-grid">
-                    <div class="project-card closed">
+                <h3 class="projects-subtitle physics-element">Featured</h3>
+                <div class="projects-grid" id="featuredProjects">
+                    <div class="project-card active">
                         <div class="project-preview">
                             <div class="project-icon-wrap">
-                                <img src="icons/haoko.svg" alt="Haoko" class="project-icon">
+                                <img src="icons/sixteencloud_logo_light.svg" alt="SixteenCloud" class="project-icon">
                             </div>
-                            <span class="project-name">Haoko</span>
-                            <span class="project-badge">Closed</span>
+                            <span class="project-name">SixteenCloud</span>
+                            <span class="project-badge active-badge">Active</span>
                         </div>
                         <div class="project-details">
                             <div class="project-tech">
-                                <div class="tech-icon-wrap"><img src="icons/c%2B%2B.svg" alt="C++" class="tech-icon"></div>
+                                <span class="tech-chip">React</span>
+                                <span class="tech-chip">TypeScript</span>
+                                <span class="tech-chip">Desktop</span>
                             </div>
-                            <p class="project-description">Haoko is a compact terminal utility written in C++ during the transition to Arch Linux. It includes an active player parser via MPRIS, search by author and track title via the lrclib.net API, and retrieval (if available) of synchronized lyrics and their subsequent display in the terminal. The project was inspired by some guy from TikTok.</p>
-                        </div>
-                    </div>
-
-                    <div class="project-card closed">
-                        <div class="project-preview">
-                            <div class="project-icon-wrap">
-                                <img src="icons/bifrost.svg" alt="Bifrost" class="project-icon">
+                            <p class="project-description">Unofficial SoundCloud client with no ads, regional unlocks, Discord Rich Presence, OAuth login, built-in track downloader, and other quality-of-life features. Live since April 2026.</p>
+                            <div class="project-links">
+                                <a href="https://github.com/ocb2016/ocbbio/releases/latest" class="project-link" id="sixteencloud-download" target="_blank" rel="noopener noreferrer">Download</a>
                             </div>
-                            <span class="project-name">Bifrost</span>
-                            <span class="project-badge">Closed</span>
-                        </div>
-                        <div class="project-details">
-                            <div class="project-tech">
-                                <div class="tech-icon-wrap"><img src="icons/c%2B%2B.svg" alt="C++" class="tech-icon"></div>
-                            </div>
-                            <p class="project-description">Bifrost was created to easily transfer files over a local network between a computer and a phone, replacing notes or cloning messages in messengers. It includes Qt integration with the Quickshell shell and a backend written in C++, enabling incredibly fast transfers thanks to optimized UDP Transfer. It also includes a web server with QR code access for guests.</p>
-                        </div>
-                    </div>
-
-                    <div class="project-card closed">
-                        <div class="project-preview">
-                            <div class="project-icon-wrap">
-                                <img src="icons/kairos.svg" alt="Kairos" class="project-icon">
-                            </div>
-                            <span class="project-name">Kairos</span>
-                            <span class="project-badge">Closed</span>
-                        </div>
-                        <div class="project-details">
-                            <div class="project-tech">
-                                <div class="tech-icon-wrap"><img src="icons/c%2B%2B.svg" alt="C++" class="tech-icon"></div>
-                            </div>
-                            <p class="project-description">Kairos was conceived as a complement to Haoko due to the lack of lip-synch for many songs on lrclib.net. It is based on OpenAI Whisper models of varying complexity: Base, Medium, and Turbo. Technologies such as VAD (silence recognition), STEM separation (separating beats from vocals in a track), and multilingual support were added. The project was abandoned due to its limited versatility: each track requires an individual approach, poor ad-lib recognition, repetitive lyrics, etc.</p>
-                        </div>
-                    </div>
-
-                    <div class="project-card closed">
-                        <div class="project-preview">
-                            <div class="project-icon-wrap">
-                                <img src="icons/raze.svg" alt="Raze" class="project-icon">
-                            </div>
-                            <span class="project-name">Raze</span>
-                            <span class="project-badge">Closed</span>
-                        </div>
-                        <div class="project-details">
-                            <div class="project-tech">
-                                <div class="tech-icon-wrap"><img src="icons/java.svg" alt="Java" class="tech-icon"></div>
-                            </div>
-                            <p class="project-description">Raze was a military-political Minecraft server running version 1.20.1, created and released to the public in December 2025. Developed by myself, the entire server logic was written in Java and compiled into a single mod. The server featured a single PvP mode, Annihilation, with the destruction of military aircraft control points. The project was closed in January 2026 due to financial inability to maintain the server.</p>
-                        </div>
-                    </div>
-
-                    <div class="project-card closed">
-                        <div class="project-preview">
-                            <div class="project-icon-wrap">
-                                <img src="icons/ecco.svg" alt="ecco" class="project-icon">
-                            </div>
-                            <span class="project-name">ecco</span>
-                            <span class="project-badge">Closed</span>
-                        </div>
-                        <div class="project-details">
-                            <div class="project-tech">
-                                <div class="tech-icon-wrap"><img src="icons/python.svg" alt="Python" class="tech-icon"></div>
-                            </div>
-                            <p class="project-description">ecco is a solo experimental project created in February 2026 by myself. It is a universal Telegram bot for downloading high-quality media content from various platforms, such as YouTube, TikTok, Instagram, Pinterest, and SoundCloud. The project is written in Python and uses the yt-dlp library. Downloading from YouTube was suspended after a week due to accessibility issues. The project was closed due to its lack of relevance and the release of the server in favor of other projects.</p>
                         </div>
                     </div>
 
@@ -566,26 +348,14 @@
                         </div>
                         <div class="project-details">
                             <div class="project-tech">
-                                <div class="tech-icon-wrap"><img src="icons/python.svg" alt="Python" class="tech-icon"></div>
+                                <span class="tech-chip">Python</span>
+                                <span class="tech-chip">aiogram</span>
+                                <span class="tech-chip">Telegram</span>
                             </div>
-                            <p class="project-description">H.S.B (Halyava Seeker Bot) is a Telegram bot created in 2026 by myself for discovering free and discounted games across multiple platforms, including Steam, Epic Games Store, GamerPower, and itch.io. Written in Python using the aiogram framework, the bot features automated giveaway tracking, new release notifications filtered by genre preferences, and a personal wishlist system with price drop alerts. The bot supports multiple languages and currencies, with scheduled background checks running every 30 minutes to 6 hours depending on the data source. 
-The bot is available on Telegram under the username @HSB_Pidorbot</p>
-                        </div>
-                    </div>
-
-                    <div class="project-card active">
-                        <div class="project-preview">
-                            <div class="project-icon-wrap">
-                                <img src="icons/sixteencloud_logo_light.svg" alt="SixteenCloud" class="project-icon">
+                            <p class="project-description">Halyava Seeker Bot — tracks free and discounted games across Steam, Epic, GamerPower, and itch.io. Giveaway alerts, genre filters, wishlist + price drops, multi-language and multi-currency. Background checks every 30 min–6 h depending on the source.</p>
+                            <div class="project-links">
+                                <a href="https://t.me/HSB_Pidorbot" class="project-link" target="_blank" rel="noopener noreferrer">Open on Telegram</a>
                             </div>
-                            <span class="project-name">SixteenCloud</span>
-                            <span class="project-badge active-badge">Active</span>
-                        </div>
-                        <div class="project-details">
-                            <div class="project-tech">
-                                <div class="tech-icon-wrap"><img src="icons/react.svg" alt="React" class="tech-icon"></div>
-                            </div>
-                            <p class="project-description">SixteenCloud is a custom, unofficial SoundCloud fork with removed ads, regional restriction bypass, Discord Rich Presence, OAuth Token Login, a built-in track downloader, and many useful features. Created by me in April 2026, it's now live. <a href="https://github.com/ocb2016/ocbbio/releases/latest" class="project-link" id="sixteencloud-download">Download it here.</a></p>
                         </div>
                     </div>
 
@@ -595,22 +365,125 @@ The bot is available on Telegram under the username @HSB_Pidorbot</p>
                                 <img src="icons/mimic_icon_white.svg" alt="MIMIC" class="project-icon">
                             </div>
                             <span class="project-name">MIMIC</span>
-                            <span class="project-badge">Closed</span>
+                            <span class="project-badge">Shipped</span>
                         </div>
                         <div class="project-details">
                             <div class="project-tech">
-                                <div class="tech-icon-wrap"><img src="icons/python.svg" alt="Python" class="tech-icon"></div>
-                                <div class="tech-icon-wrap"><img src="icons/react.svg" alt="React" class="tech-icon"></div>
-                                <div class="tech-icon-wrap"><img src="icons/typescript.svg" alt="TypeScript" class="tech-icon"></div>
-                                <div class="tech-icon-wrap"><img src="icons/docker.svg" alt="Docker" class="tech-icon"></div>
+                                <span class="tech-chip">Python</span>
+                                <span class="tech-chip">FastAPI</span>
+                                <span class="tech-chip">React</span>
+                                <span class="tech-chip">TypeScript</span>
+                                <span class="tech-chip">Docker</span>
+                                <span class="tech-chip">RAG</span>
                             </div>
-                            <p class="project-description">MIMIC is a full-stack SaaS I built from April to July 2026: an autonomous Telegram persona-clone agent. It connects to a user's Telegram account via MTProto and replies in selected chats so the other person shouldn't realize they're talking to a bot. The core is a behavioral engine — typing jitter, sleep schedule, delayed replies, read-skip, reactions — plus Human-in-the-Loop escalation for risky topics, PersonaBible profiles, RAG over real chat history with e5 embeddings, CryptoBot billing, and a Telegram Mini-App for control. Backend in Python (Pyrogram, aiogram, FastAPI) with Postgres, Redis, and Qdrant; TMA frontend in React and TypeScript. The project was completed and handed off in July 2026.</p>
+                            <p class="project-description">Full-stack SaaS (Apr–Jul 2026): autonomous Telegram persona-clone agent via MTProto. Behavioral engine (typing jitter, sleep schedule, delayed replies, reactions), Human-in-the-Loop for risky topics, PersonaBible + RAG over chat history, CryptoBot billing, Mini-App control panel. Handed off July 2026.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="projects-closed-wrap">
+                    <button type="button" class="projects-toggle" id="closedToggle" aria-expanded="false" aria-controls="closedProjects">
+                        <span class="projects-toggle-label">Show closed</span>
+                        <span class="projects-toggle-count">5</span>
+                    </button>
+
+                    <div class="projects-grid closed-grid" id="closedProjects" hidden>
+                        <div class="project-card closed">
+                            <div class="project-preview">
+                                <div class="project-icon-wrap">
+                                    <img src="icons/haoko.svg" alt="Haoko" class="project-icon">
+                                </div>
+                                <span class="project-name">Haoko</span>
+                                <span class="project-badge">Closed</span>
+                            </div>
+                            <div class="project-details">
+                                <div class="project-tech">
+                                    <span class="tech-chip">C++</span>
+                                    <span class="tech-chip">MPRIS</span>
+                                    <span class="tech-chip">lrclib</span>
+                                </div>
+                                <p class="project-description">Terminal utility from the Arch transition: current track via MPRIS, search on lrclib.net, synced lyrics in the terminal.</p>
+                            </div>
+                        </div>
+
+                        <div class="project-card closed">
+                            <div class="project-preview">
+                                <div class="project-icon-wrap">
+                                    <img src="icons/bifrost.svg" alt="Bifrost" class="project-icon">
+                                </div>
+                                <span class="project-name">Bifrost</span>
+                                <span class="project-badge">Closed</span>
+                            </div>
+                            <div class="project-details">
+                                <div class="project-tech">
+                                    <span class="tech-chip">C++</span>
+                                    <span class="tech-chip">Qt</span>
+                                    <span class="tech-chip">UDP</span>
+                                    <span class="tech-chip">Quickshell</span>
+                                </div>
+                                <p class="project-description">Local-network file transfer phone ↔ PC. Qt + Quickshell UI, C++ backend, fast UDP transfer, guest web server with QR access.</p>
+                            </div>
+                        </div>
+
+                        <div class="project-card closed">
+                            <div class="project-preview">
+                                <div class="project-icon-wrap">
+                                    <img src="icons/kairos.svg" alt="Kairos" class="project-icon">
+                                </div>
+                                <span class="project-name">Kairos</span>
+                                <span class="project-badge">Closed</span>
+                            </div>
+                            <div class="project-details">
+                                <div class="project-tech">
+                                    <span class="tech-chip">C++</span>
+                                    <span class="tech-chip">Whisper</span>
+                                    <span class="tech-chip">VAD</span>
+                                    <span class="tech-chip">STEM</span>
+                                </div>
+                                <p class="project-description">Lyrics generator for tracks missing on lrclib — Whisper (Base/Medium/Turbo), VAD, STEM separation, multilingual. Dropped: too much per-track handholding.</p>
+                            </div>
+                        </div>
+
+                        <div class="project-card closed">
+                            <div class="project-preview">
+                                <div class="project-icon-wrap">
+                                    <img src="icons/raze.svg" alt="Raze" class="project-icon">
+                                </div>
+                                <span class="project-name">Raze</span>
+                                <span class="project-badge">Closed</span>
+                            </div>
+                            <div class="project-details">
+                                <div class="project-tech">
+                                    <span class="tech-chip">Java</span>
+                                    <span class="tech-chip">Minecraft 1.20.1</span>
+                                    <span class="tech-chip">PvP</span>
+                                </div>
+                                <p class="project-description">Military-political MC server (Annihilation / control points). Solo Java mod for full server logic. Public Dec 2025, closed Jan 2026 — hosting costs.</p>
+                            </div>
+                        </div>
+
+                        <div class="project-card closed">
+                            <div class="project-preview">
+                                <div class="project-icon-wrap">
+                                    <img src="icons/ecco.svg" alt="ecco" class="project-icon">
+                                </div>
+                                <span class="project-name">ecco</span>
+                                <span class="project-badge">Closed</span>
+                            </div>
+                            <div class="project-details">
+                                <div class="project-tech">
+                                    <span class="tech-chip">Python</span>
+                                    <span class="tech-chip">yt-dlp</span>
+                                    <span class="tech-chip">Telegram</span>
+                                </div>
+                                <p class="project-description">Telegram bot for high-quality media from YouTube, TikTok, Instagram, Pinterest, SoundCloud. Closed after YouTube friction and shifting focus.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="setup-section">
+            <section class="setup-section" id="setup">
                 <h2 class="section-title physics-element">Setup</h2>
 
                 <div class="setup-grid">
@@ -620,8 +493,17 @@ The bot is available on Telegram under the username @HSB_Pidorbot</p>
                             <li class="setup-item">Ryzen 5 3600</li>
                             <li class="setup-item">16 GB DDR4 3600 MHz</li>
                             <li class="setup-item">Sapphire RX 580 8 GB</li>
-                            <li class="setup-item">Acer 23.8" 100 Hz</li>
+                            <li class="setup-item">Acer 23.8&quot; 100 Hz</li>
                             <li class="setup-item">Hator Rockfall 2 Mecha TKL</li>
+                        </ul>
+                    </div>
+                    <div class="setup-column">
+                        <h3 class="setup-category">Environment</h3>
+                        <ul class="setup-list">
+                            <li class="setup-item"><span class="setup-label">OS</span> Arch Linux</li>
+                            <li class="setup-item"><span class="setup-label">WM</span> Hyprland</li>
+                            <li class="setup-item"><span class="setup-label">Shell</span> fish</li>
+                            <li class="setup-item"><span class="setup-label">Browser</span> Zen</li>
                         </ul>
                     </div>
                     <div class="setup-column">
@@ -643,7 +525,7 @@ The bot is available on Telegram under the username @HSB_Pidorbot</p>
             </footer>
     </div>
 
-    <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+    <button type="button" class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
     </button>
 
@@ -653,7 +535,8 @@ The bot is available on Telegram under the username @HSB_Pidorbot</p>
             .then(data => {
                 const exe = data.assets && data.assets.find(a => a.name.endsWith('.exe'));
                 if (exe) {
-                    document.getElementById('sixteencloud-download').href = exe.browser_download_url;
+                    const link = document.getElementById('sixteencloud-download');
+                    if (link) link.href = exe.browser_download_url;
                 }
             })
             .catch(() => {});

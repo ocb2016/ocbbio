@@ -4,6 +4,10 @@ const discordCard = document.getElementById("discordCard");
 const discordButton = document.getElementById("discordCopyBtn");
 const copyToast = document.getElementById("copyToast");
 const scrollTopButton = document.getElementById("scrollTopBtn");
+const hero = document.getElementById("hero");
+const navIsland = document.getElementById("navIsland");
+const closedToggle = document.getElementById("closedToggle");
+const closedProjects = document.getElementById("closedProjects");
 
 let toastTimer = null;
 let lanyardSocket = null;
@@ -167,6 +171,38 @@ scrollTopButton?.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+/**
+ * Hero-visible → island hidden (nav is static in header).
+ * Hero gone → island slides in like a compact pill.
+ */
+function initNavIsland() {
+    if (!hero || !navIsland) return;
+
+    const setIsland = (visible) => {
+        navIsland.classList.toggle("is-visible", visible);
+        navIsland.setAttribute("aria-hidden", String(!visible));
+    };
+
+    if (!("IntersectionObserver" in window)) {
+        const onScroll = () => setIsland(window.scrollY > hero.offsetHeight * 0.6);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+        return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+        // Hide island while any of the hero is still on screen
+        setIsland(!entry.isIntersecting);
+    }, {
+        threshold: 0,
+        rootMargin: "-12px 0px 0px 0px"
+    });
+
+    observer.observe(hero);
+}
+
+initNavIsland();
+
 function groupTimelineByYear() {
     const timeline = document.querySelector(".timeline");
     if (!timeline) return;
@@ -197,23 +233,72 @@ function groupTimelineByYear() {
 
 groupTimelineByYear();
 
-/** Active projects first, then paused, then closed — keeps the list scannable. */
-function sortProjectsByStatus() {
-    const grid = document.querySelector(".projects-grid");
-    if (!grid) return;
+/** Featured stays open; closed list is collapsed by default. */
+function initClosedProjectsToggle() {
+    if (!closedToggle || !closedProjects) return;
 
-    const rank = (card) => {
-        if (card.classList.contains("active")) return 0;
-        if (card.classList.contains("paused")) return 1;
-        return 2; // closed / anything else
-    };
+    const label = closedToggle.querySelector(".projects-toggle-label");
 
-    [...grid.children]
-        .sort((a, b) => rank(a) - rank(b))
-        .forEach((card) => grid.append(card));
+    closedToggle.addEventListener("click", () => {
+        const open = closedToggle.getAttribute("aria-expanded") === "true";
+        const next = !open;
+        closedToggle.setAttribute("aria-expanded", String(next));
+        closedProjects.hidden = !next;
+        if (label) {
+            label.textContent = next ? "Hide closed" : "Show closed";
+        }
+
+        // Hidden cards never hit IntersectionObserver — force-reveal on open
+        if (next) {
+            closedProjects.querySelectorAll(".project-card").forEach((card, i) => {
+                if (!card.classList.contains("is-visible")) {
+                    paintReveal(card, Math.min(i, 8) * 40);
+                }
+            });
+        }
+    });
 }
 
-sortProjectsByStatus();
+initClosedProjectsToggle();
+
+/** Highlight the section currently in view. */
+function initNavSpy() {
+    const links = [...document.querySelectorAll(".nav-link")];
+    if (!links.length) return;
+
+    const sections = links
+        .map((link) => {
+            const id = link.getAttribute("href")?.slice(1);
+            const el = id ? document.getElementById(id) : null;
+            return el ? { link, el } : null;
+        })
+        .filter(Boolean);
+
+    if (!sections.length || !("IntersectionObserver" in window)) return;
+
+    const setActive = (id) => {
+        links.forEach((link) => {
+            link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
+        });
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible[0]) {
+            setActive(visible[0].target.id);
+        }
+    }, {
+        rootMargin: "-20% 0px -55% 0px",
+        threshold: [0.1, 0.25, 0.5]
+    });
+
+    sections.forEach(({ el }) => observer.observe(el));
+}
+
+initNavSpy();
 
 const revealTargets = [
     ...document.querySelectorAll(".physics-element, .skill-category, .project-card, .setup-grid")
@@ -222,14 +307,6 @@ const revealTargets = [
 function paintReveal(target, delayMs) {
     target.style.setProperty("--reveal-delay", `${delayMs}ms`);
     target.classList.add("is-visible");
-
-    if (target.classList.contains("skill-category")) {
-        window.setTimeout(() => {
-            target.querySelectorAll(".skill-fill").forEach((fill) => {
-                fill.style.width = `${fill.dataset.level}%`;
-            });
-        }, 120 + delayMs);
-    }
 }
 
 /**
@@ -254,7 +331,6 @@ function createRevealController() {
         pending.clear();
 
         batch.forEach((target, i) => {
-            // Sequential within the wave; soft cap so huge batches don't lag forever
             const delayMs = Math.min(i, 8) * 50;
             paintReveal(target, delayMs);
         });
