@@ -1,4 +1,8 @@
 const DISCORD_USER_ID = "1268632081748197508";
+const ACTIVITY_APP_ICONS = {
+    "356875988589740042": "6b4b3fa4c83555d3008de69d33a60588",
+    "1402418239342120960": "ea86f6c52576847a7cb81f1c1faa18a3"
+};
 
 const discordCard = document.getElementById("discordCard");
 const discordButton = document.getElementById("discordCopyBtn");
@@ -13,6 +17,39 @@ let toastTimer = null;
 let lanyardSocket = null;
 let lanyardHeartbeat = null;
 let elapsedInterval = null;
+
+function setActivityImage(image, url) {
+    image.onerror = () => {
+        image.removeAttribute("src");
+        image.style.display = "none";
+    };
+
+    if (!url) {
+        image.removeAttribute("src");
+        image.style.display = "none";
+        return;
+    }
+
+    image.src = url;
+    image.style.display = "block";
+}
+
+function getActivityImageUrl(activity) {
+    const image = activity.assets?.large_image;
+
+    if (image?.startsWith("mp:")) {
+        return `https://media.discordapp.net/${image.slice(3)}`;
+    }
+
+    if (image && activity.application_id) {
+        return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${image}.png`;
+    }
+
+    const icon = ACTIVITY_APP_ICONS[activity.application_id];
+    return icon
+        ? `https://cdn.discordapp.com/app-icons/${activity.application_id}/${icon}.png`
+        : "";
+}
 
 function showCopyToast() {
     window.clearTimeout(toastTimer);
@@ -74,8 +111,7 @@ function updateActivity(data) {
         activityDetails.textContent = data.spotify.artist || "";
         activityDetails.style.display = data.spotify.artist ? "block" : "none";
         activityState.style.display = "none";
-        activityImage.src = data.spotify.album_art_url || "";
-        activityImage.style.display = data.spotify.album_art_url ? "block" : "none";
+        setActivityImage(activityImage, data.spotify.album_art_url || "");
         return;
     }
 
@@ -93,15 +129,7 @@ function updateActivity(data) {
     activityDetails.textContent = details || "";
     activityDetails.style.display = details ? "block" : "none";
 
-    const image = activity.assets?.large_image;
-    if (image?.startsWith("mp:")) {
-        activityImage.src = `https://media.discordapp.net/${image.slice(3)}`;
-    } else if (image && activity.application_id) {
-        activityImage.src = `https://cdn.discordapp.com/app-assets/${activity.application_id}/${image}.png`;
-    } else {
-        activityImage.src = "";
-    }
-    activityImage.style.display = activityImage.src ? "block" : "none";
+    setActivityImage(activityImage, getActivityImageUrl(activity));
 
     if (!activity.timestamps?.start) {
         activityState.style.display = "none";
