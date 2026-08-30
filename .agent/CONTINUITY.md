@@ -2,11 +2,15 @@
 
 ## [PLANS]
 
+- 2026-08-30T08:45:00Z [USER] Опубликовать Discord domain verification по пути `/.well-known/discord` для `ocb2016.me`.
+
 - 2026-07-22T00:00:00+03:00 [USER] Restyle the personal static website to a minimal, premium-looking design and remove the cosmic/card/animation-heavy aesthetic.
 - 2026-07-22T00:00:00+03:00 [USER] Choose a final signal color from rendered variants before finalizing the palette.
 - 2026-07-22T00:00:00+03:00 [USER] Publish the completed site to GitHub Pages.
 
 ## [DECISIONS]
+
+- 2026-08-30T08:45:00Z [CODE] Добавлен `.nojekyll`, поскольку GitHub Pages исключает скрытую директорию `.well-known` при Jekyll-сборке; это публикует verification-файл без изменения сайта.
 
 - 2026-07-22T00:00:00+03:00 [ASSUMPTION] Use the Swiss anchor: cold white surface, system sans typography, one red accent, hairline grid rules, and restrained interaction.
 - 2026-07-22T00:00:00+03:00 [USER] Supersedes the Swiss direction: the light theme has unreadable SVG icons and the layout lacks character and motion.
